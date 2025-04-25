@@ -44,7 +44,7 @@ export function TechniqueCard({ title, description, videoUrl, fullDescription }:
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <div className="aspect-video w-full bg-muted mb-4">
-          <video controls className="w-full h-full object-cover" poster="/placeholder.svg?height=400&width=800">
+          <video muted controls className="w-full h-full object-cover" poster="/placeholder.svg?height=400&width=800">
             <source src={videoUrl} type="video/mp4" />
             Votre navigateur ne supporte pas la lecture de vidéos.
           </video>
