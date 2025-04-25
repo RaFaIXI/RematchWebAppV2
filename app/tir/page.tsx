@@ -14,7 +14,7 @@ export default function TirPage() {
       id: 2,
       title: "Tir enroulé",
       description: "Pour contourner les défenseurs et le gardien",
-      videoUrl: "#",
+      videoUrl: "#",  
       fullDescription:
         "Le tir enroulé permet de contourner les défenseurs et le gardien. Approchez le ballon légèrement par le côté. Utilisez l'intérieur de votre pied pour frapper le côté du ballon, en enroulant votre jambe autour pour créer un effet. Cette technique est idéale pour les coups francs et les tirs depuis les côtés de la surface de réparation.",
     },
