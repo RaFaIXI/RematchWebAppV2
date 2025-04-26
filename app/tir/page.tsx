@@ -72,12 +72,14 @@ export default function TirPage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {techniques.map((technique) => (
           <TechniqueCard
-            key={technique.id}
-            title={technique.title}
-            description={technique.description}
-            videoUrl={technique.videoUrl}
-            fullDescription={technique.fullDescription}
-          />
+          key={technique.id}
+          title={technique.title}
+          description={technique.description}
+          videoUrl={technique.videoUrl}
+          fullDescription={technique.fullDescription}
+          difficulty={technique.difficulty}
+          utility={technique.utility}
+        />
         ))}
       </div>
     </div>
