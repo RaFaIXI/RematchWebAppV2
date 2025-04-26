@@ -26,7 +26,7 @@ export default function StrategiePage() {
       id: 3,
       title: "Formation en pyramide",
       description: "Formation offensive pour créer des occasions",
-      videoUrl: "/video/Strategie/UnlockUltimatePowerwithPyramidFormationinRematch.mp4",
+      videoUrl: "https://www.youtube.com/watch?v=cZAg62oHcpY",
       fullDescription:
         "La formation en pyramide est une stratégie offensive qui permet de créer des occasions de but en exploitant les espaces laissés par la défense adverse. En plaçant vos joueurs en forme de pyramide, vous pouvez maximiser les options de passe et de tir. Cette formation est particulièrement efficace pour déstabiliser les défenses compactes et créer des ouvertures.",
       difficulty: 5,
