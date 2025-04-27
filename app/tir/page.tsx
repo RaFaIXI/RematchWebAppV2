@@ -1,62 +1,169 @@
 import { TechniqueCard } from "@/components/technique-card"
 
 export default function TirPage() {
-  const techniques = [
+  const techniques: {
+    id: number
+    title: string
+    description: string
+    videoUrl: string
+    videoType: "local" | "youtube"
+    fullDescription: string
+    difficulty: number
+    utility: number
+  }[] = [
     {
       id: 1,
-      title: "Tir du cou-de-pied",
-      description: "La technique de base pour un tir puissant",
-      videoUrl: "#",
-      fullDescription:
-        "Le tir du cou-de-pied est la technique de base pour un tir puissant. Placez votre pied d'appui à côté du ballon, pointant vers la cible. Frappez le ballon avec le dessus du pied (cou-de-pied) en gardant la cheville verrouillée. Suivez votre mouvement après le contact pour maximiser la puissance.",
+      title: "Degrés de tir",
+      description: "les 3 différentes vitesses de tir",
+      videoUrl: "/video/tir/degreetir.mp4",
+      videoType: "local",
+      fullDescription: "les 3 degres de tir sont : la balle sur le joueur, balle a porté du joueur, et balle a porté du joueur en l'air chacun a plus de puissance et de vitesse que le précédent",
+      difficulty: 3,
+      utility: 4,
     },
     {
       id: 2,
-      title: "Tir enroulé",
-      description: "Pour contourner les défenseurs et le gardien",
-      videoUrl: "#",  
+      title: "Tir Dévié",
+      description: "Feinte le gardien avec un tir dévié",
+      videoUrl: "/video/tir/deviationShot.mp4",
+      videoType: "local",
       fullDescription:
-        "Le tir enroulé permet de contourner les défenseurs et le gardien. Approchez le ballon légèrement par le côté. Utilisez l'intérieur de votre pied pour frapper le côté du ballon, en enroulant votre jambe autour pour créer un effet. Cette technique est idéale pour les coups francs et les tirs depuis les côtés de la surface de réparation.",
+        "votre équipié tire et vous déviez le ballon à l'opposé du gardien à la dernière seconde",
+      difficulty: 2,
+      utility: 5,
     },
     {
       id: 3,
-      title: "Volée",
-      description: "Frapper le ballon directement dans les airs",
-      videoUrl: "#",
+      title: "Multi Tetes",
+      description: "Feinte le gardien avec plusieurs têtes backboard",
+      videoUrl: "/video/tir/infinitete.mp4",
+      videoType: "local",
       fullDescription:
-        "La volée consiste à frapper le ballon directement dans les airs. Gardez les yeux sur le ballon pendant qu'il descend. Positionnez votre corps sous le ballon et frappez-le avec le dessus du pied au moment où il arrive à hauteur idéale. Gardez le corps équilibré et suivez votre mouvement pour diriger le tir.",
+        "receptionne le ballon ou met le en hauteur et fait des passe lobé de la tête backboard puis tire",
+      difficulty: 3,
+      utility: 2,
     },
     {
       id: 4,
-      title: "Tir du pointu",
-      description: "Pour surprendre le gardien avec un tir rapide",
-      videoUrl: "#",
+      title: "Tir Instantané",
+      description: "Tir qui se charge instantanément full power",
+      videoUrl: "/video/tir/InstaShoot.mp4",
+      videoType: "local",
       fullDescription:
-        "Le tir du pointu permet de surprendre le gardien avec un tir rapide. Utilisez la pointe de votre chaussure pour frapper le ballon. Cette technique sacrifie la puissance pour la rapidité d'exécution, ne nécessitant qu'un mouvement minimal du pied. Idéal dans les situations où vous avez peu de temps pour armer votre tir.",
+        "pousse la balle ou fait un controle orienté et tire instantanément sans temps de charge en maintenant le bouton de tire avant de faire le tir (voir buffer)",
+      difficulty: 1,
+      utility: 2,
     },
     {
       id: 5,
-      title: "Tir en lucarne",
-      description: "Viser les coins supérieurs du but",
-      videoUrl: "#",
+      title: "Tetes",
+      description: "tir de la tête",
+      videoUrl: "/video/tir/atetes.mp4",
+      videoType: "local",
       fullDescription:
-        "Le tir en lucarne consiste à viser les coins supérieurs du but, là où le gardien a le plus de difficulté à atteindre. Frappez le ballon légèrement sous son centre avec le cou-de-pied. Inclinez légèrement le corps en arrière pour donner de l'élévation. Cette technique nécessite beaucoup de précision mais est très difficile à arrêter pour les gardiens.",
+        "le tir de la tête est un tir qui est très puissant et qui peut être très efficace si vous êtes bien placé. Il faut bien viser et ne pas hésiter à tirer fort. il se fait si la balle est assez haute.",
+      difficulty: 2,
+      utility: 4,
     },
     {
       id: 6,
-      title: "Penalty",
-      description: "Techniques pour réussir vos penalties",
-      videoUrl: "#",
+      title: "Feinte de tete",
+      description: "Feinte de tete avec le controle",
+      videoUrl: "/video/tir/LobFeint.mp4",
+      videoType: "local",
       fullDescription:
-        "Pour réussir un penalty, la confiance et la concentration sont essentielles. Choisissez votre coin avant de tirer et ne changez pas d'avis. Une course d'élan régulière de 3-5 pas est idéale. Observez discrètement le gardien mais restez concentré sur votre technique. Variez vos tirs entre puissance et placement selon vos forces.",
+      "Feinte de tete avec le controle",
+      difficulty: 1,
+      utility: 3,
     },
+
     {
       id: 7,
-      title: "Penalty2",
-      description: "Techniques pour réussir vos penalties",
-      videoUrl: "#",
+      title: "Solo SideBackboard",
+      description: "Feinte de tir avec le backboard avec une passe sur le mur",
+      videoUrl: "/video/tir/mixuppassecotetir.mp4",
+      videoType: "local",
       fullDescription:
-        "Pour réussir un penalty, la confiance et la concentration sont essentielles. Choisissez votre coin avant de tirer et ne changez pas d'avis. Une course d'élan régulière de 3-5 pas est idéale. Observez discrètement le gardien mais restez concentré sur votre technique. Variez vos tirs entre puissance et placement selon vos forces.",
+      "Feinte de tir avec le backboard avec une passe sur le mur",
+      difficulty: 2,
+      utility: 2,
+    },
+    {
+      id: 8,
+      title: "Short Pass - Shoot",
+      description: "Feinte un tir avec une petite passe lobée",
+      videoUrl: "/video/tir/ShortPassShoot.mp4",
+      videoType: "local",
+      fullDescription:
+      "Feinte un tir avec une petite passe lobée court puis tir",
+      difficulty: 2,
+      utility: 3,
+    },
+    {
+      id: 9,
+      title: "Side Shoot",
+      description: "un tir depuis le poto de corner avec un effet",
+      videoUrl: "/video/tir/SideShot.mp4",
+      videoType: "local",
+      fullDescription:
+      "il faut mettre un effet vers le but tout en décalant son curseur vers l'extérieur du but pour que le ballon parte vers l'intérieur du but grâce à l'effet",
+      difficulty: 3,
+      utility: 3,
+    },
+    {
+      id: 10,
+      title: "Side Wall Rebound Shoot",
+      description: "un tir depuis le poto de corner avec un effet qui rebondit sur le mur pour aller dans le but",
+      videoUrl: "/video/tir/SideShot.mp4",
+      videoType: "local",
+      fullDescription:
+      "il faut viser le poto avec un effet vers le but, être précis selon la distance et mettre la force au maximum pour que le ballon rebondisse sur le mur et aille dans le but, ce tir feinte vraiment bien le gardien",
+      difficulty: 4,
+      utility: 4,
+    },
+    {
+      id: 11,
+      title: "Arc en ciel - Tete Backboard",
+      description: "Reprend la balle dirrectement depuis l'arc en ciel et vise sur le mur avec un effet",
+      videoUrl: "/video/tir/specialearcencielTeteWallBut.mp4",
+      videoType: "local",
+      fullDescription:
+      "Reprend la balle dirrectement depuis l'arc en ciel et vise sur le mur avec un effet pour feinter le gardien",
+      difficulty: 3,
+      utility: 3,
+    },
+    {
+      id: 12,
+      title: "Talonade",
+      description: "Regarde vers le centre du terrain et tire dans le but",
+      videoUrl: "/video/tir/talonnade.mp4",
+      videoType: "local",
+      fullDescription:
+      "retourne ton personnage vers le centre du terrain, vise les cages ou fait ta touche arrière et fait une passe vers l'arrière.",
+      difficulty: 3,
+      utility: 2,
+    },
+    {
+      id: 13,
+      title: "Effet - bas",
+      description: "Effet vers le bas qui lobe le gardien",
+      videoUrl: "/video/tir/tiranglebas.mp4",
+      videoType: "local",
+      fullDescription:
+      "Effet vers le bas qui lobe le gardien, il faut bien viser et mettre un effet vers le bas pour que le ballon passe au dessus du gardien ou qui rebondisse juste avant le but",
+      difficulty: 2,
+      utility: 3,
+    },
+    {
+      id: 14,
+      title: "Wall retournée",
+      description: "Retournée seule à l'aveugle",
+      videoUrl: "/video/tir/Wallretourne.mp4",
+      videoType: "local",
+      fullDescription:
+      "fait une passe de puissance moyenne ou faible sur le mur selon la distance et retourne le personnage vers le mur et vise la lucarne puis tir",
+      difficulty: 4,
+      utility: 3,
     },
   ]
 
@@ -79,6 +186,7 @@ export default function TirPage() {
           fullDescription={technique.fullDescription}
           difficulty={technique.difficulty}
           utility={technique.utility}
+          videoType={technique.videoType} 
         />
         ))}
       </div>

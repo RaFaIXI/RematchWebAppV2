@@ -1,22 +1,34 @@
 import { TechniqueCard } from "@/components/technique-card"
 
 export default function DefensePage() {
-  const techniques = [
+  const techniques: {
+    id: number
+    title: string
+    description: string
+    videoUrl: string
+    videoType: "local" | "youtube"
+    fullDescription: string
+    difficulty: number
+    utility: number
+  }[] = [
     {
       id: 1,
       title: "Tacle glissé",
       description: "Technique pour récupérer le ballon au sol",
       videoUrl: "/video/Defense/tacleglisse.mp4",
+      videoType:"local",
       fullDescription:
         "Le tacle glissé est une technique défensive utilisée pour récupérer le ballon quand l'attaquant est en possession. Approchez l'adversaire en sprintant à une vitesse assez haute, appuyer sur votre touche de tacle. Cette technique doit être utilisée en dernier recours car elle vous met temporairement hors position si vous échouez.",
       difficulty: 1,
-      utility: 4
+      utility: 4 
     },
     {
       id: 2,
       title: "Tacle",
       description: "Technique pour récupérer le ballon au sol",
       videoUrl: "/video/Defense/tacle.mp4",
+      videoType:"local",
+
       fullDescription:
       "Le tacle est une technique défensive utilisée pour récupérer le ballon quand l'attaquant est en possession sans autant commit que le tacle glissé. Approchez l'adversaire sans courrir, appuyer sur votre touche de tacle. Cette technique ce fait battre par des dribbles rapides, mais est efficace contre les joueurs moins agiles.",
       difficulty: 1,
@@ -25,6 +37,7 @@ export default function DefensePage() {
     {
       id: 3,
       title: "Interception",
+      videoType:"local",
       description: "Anticiper et couper les passes et tirs adverses",
       videoUrl: "/video/Defense/block.mp4",
       fullDescription:
@@ -47,14 +60,15 @@ export default function DefensePage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {techniques.map((technique) => (
           <TechniqueCard
-            key={technique.id}
-            title={technique.title}
-            description={technique.description}
-            videoUrl={technique.videoUrl}
-            fullDescription={technique.fullDescription}
-            difficulty={technique.difficulty}
-            utility={technique.utility}
-          />
+          key={technique.id}
+          title={technique.title}
+          description={technique.description}
+          videoUrl={technique.videoUrl}
+          fullDescription={technique.fullDescription}
+          difficulty={technique.difficulty}
+          utility={technique.utility}
+          videoType={technique.videoType} 
+        />
         ))}
       </div>
     </div>

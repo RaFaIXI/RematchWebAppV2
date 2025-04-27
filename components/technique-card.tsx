@@ -8,6 +8,7 @@ interface TechniqueCardProps {
   title: string
   description: string
   videoUrl: string
+  videoType: "local" | "youtube" // Add videoType prop
   fullDescription: string
   difficulty: number // 1-5 rating
   utility: number // 1-5 rating
@@ -32,20 +33,29 @@ const StarRating = ({ rating, label }: { rating: number; label: string }) => {
   )
 }
 
+// Add a helper function to extract YouTube video ID
+const getYouTubeVideoId = (url: string): string | null => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  const match = url.match(regExp)
+  return match && match[2].length === 11 ? match[2] : null
+}
+
 export function TechniqueCard({
   title,
   description,
   videoUrl,
+  videoType,
   fullDescription,
   difficulty,
   utility,
 }: TechniqueCardProps) {
   const [isOpen, setIsOpen] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const youtubeId = videoType === "youtube" ? getYouTubeVideoId(videoUrl) : null
 
-  // Force video to be muted, autoplay, and loop
+  // Force video to be muted, autoplay, and loop for local videos
   useEffect(() => {
-    if (!videoRef.current || !isOpen) return
+    if (videoType !== "local" || !videoRef.current || !isOpen) return
 
     // Force settings
     const video = videoRef.current
@@ -81,7 +91,45 @@ export function TechniqueCard({
       video.removeEventListener("play", enforceMute)
       video.pause()
     }
-  }, [isOpen])
+  }, [isOpen, videoType])
+
+  // Render the appropriate video element based on type
+  const renderVideo = () => {
+    if (videoType === "youtube" && youtubeId) {
+      // YouTube embed with autoplay and mute parameters
+      return (
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&mute=1&loop=1&playlist=${youtubeId}`}
+          title={`YouTube video: ${title}`}
+          className="w-full h-full absolute top-0 left-0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      )
+    } else {
+      // Local video
+      return (
+        <video
+          ref={videoRef}
+          muted={true}
+          autoPlay={isOpen}
+          loop={true}
+          playsInline={true}
+          onVolumeChange={() => {
+            if (videoRef.current) {
+              videoRef.current.muted = true
+              videoRef.current.volume = 0
+            }
+          }}
+          className="w-full h-full object-cover"
+          poster="/placeholder.svg?height=400&width=800"
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+      )
+    }
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -112,28 +160,8 @@ export function TechniqueCard({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className="aspect-video w-full bg-muted mb-4">
-          <video
-            ref={videoRef}
-            muted={true}
-            autoPlay={true}
-            loop={true}
-            playsInline={true}
-            onVolumeChange={() => {
-              if (videoRef.current) {
-                videoRef.current.muted = true
-                videoRef.current.volume = 0
-              }
-            }}
-            className="w-full h-full object-cover"
-            poster="/placeholder.svg?height=400&width=800"
-          >
-            <source src={videoUrl} type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture de vidéos.
-          </video>
-        </div>
+        <div className="aspect-video w-full bg-muted mb-4 relative">{renderVideo()}</div>
         <div className="space-y-4">
-          {/* Also show ratings in the dialog */}
           <div className="flex flex-col sm:flex-row sm:gap-6 mb-2">
             <StarRating rating={difficulty} label="Difficulté" />
             <StarRating rating={utility} label="Utilité" />
