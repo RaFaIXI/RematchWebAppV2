@@ -7,6 +7,7 @@ const nextConfig = {
     },
     // This is important for GitHub Pages
     assetPrefix: process.env.NODE_ENV === 'production' ? '/RematchWebAppV2/' : '',
+    distDir: 'out' // Explicitly specify the output directory
   }
   
   module.exports = nextConfig
