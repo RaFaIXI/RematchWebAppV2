@@ -14,7 +14,7 @@ export function SiteHeader() {
     { href: "/tir", label: "Tir" },
     { href: "/defense", label: "Défense" },
     { href: "/strategie", label: "Stratégie" },
-    { href: "/gardien", label: "Gardien" },
+///     { href: "/gardien", label: "Gardien" },
     { href: "/dribles", label: "Dribles" },
   ]
 
