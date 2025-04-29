@@ -14,22 +14,22 @@ export default function StrategiePage() {
     {
       id: 1,
       title: "BackBoard",
-      description: "Rebondir le ballon sur le mur pour centrer",
+      description: "Faire rebondir le ballon sur le mur pour centrer",
       videoUrl: "/video/Strategie/BackBoard.mp4",
-      videoType:"local",
+      videoType: "local",
       fullDescription:
-        "La technique du BackBoard consiste à utiliser le mur pour faire rebondir le ballon et créer un centre précis. Cela permet de surprendre la défense adverse et de créer des occasions de but. Pour exécuter cette technique, placez-vous à une distance appropriée du mur, frappez le ballon avec précision pour qu'il rebondisse sur le mur et arrive à un coéquipier dans la zone de tir. les effets permettent de controler l'atterisage de la balle.",
+        "La technique du BackBoard consiste à utiliser le mur pour faire rebondir le ballon et créer un centre précis. Cela permet de surprendre la défense adverse et de créer des occasions de but. Pour exécuter cette technique, placez-vous à une distance appropriée du mur, frappez le ballon avec précision pour qu'il rebondisse sur le mur et arrive à un coéquipier dans la zone de tir. Les effets permettent de contrôler l’atterrissage de la balle.",
       difficulty: 2,
       utility: 5,
     },
     {
       id: 2,
       title: "Buffer",
-      description: "Exploiter le Buffer pour créer des occasions",
+      description: "Exploiter le buffer pour créer des occasions",
       videoUrl: "/video/Strategie/buffergclickmiddleligneblanche.mp4",
-      videoType:"local",
+      videoType: "local",
       fullDescription:
-        "Le buffer c’est une sorte de système qui enregistre les boutons que tu appuies un tout petit peu avant qu’ils soient vraiment utilisés (1.5sec environt), pour les exécuter au bon moment. \nTu appuies sur \"tir\" juste avant que le ballon arrive. \n→ Le jeu garde ton appui en mémoire pendant un court instant. \n→ Dès que le joueur peut effectivement tirer, le jeu exécute ton tir. le buffer est 'spammable', ce qui signifie que tu peux appuyer plusieurs fois sur le bouton avant que l'action ne se déclenche, et le jeu va l'exécuter lorsque c'est possible. Ce n'est pas le cas sur d'autres jeux, où si tu appuies sur un bouton pour faire une tech avant le moment où le jeu commence à \"buffer\" l'action, il ne prendra pas en compte ton appui. Si tu cliques trop tôt, tu rates la tech, ce qui ajoute une certaine difficulté au jeu et demande plus de précision.",
+        "Le buffer, c’est une sorte de système qui enregistre les boutons sur lesquels tu appuies un tout petit peu avant qu’ils soient vraiment utilisés (environ 1,5 seconde), pour les exécuter au bon moment. \nTu appuies sur « tir » juste avant que le ballon arrive. \n→ Le jeu garde ton appui en mémoire pendant un court instant. \n→ Dès que le joueur peut effectivement tirer, le jeu exécute ton tir. Le buffer est « spammable », ce qui signifie que tu peux appuyer plusieurs fois sur le bouton avant que l'action ne se déclenche, et le jeu va l'exécuter lorsque c'est possible. Ce n'est pas le cas dans d'autres jeux, où si tu appuies sur un bouton pour faire une technique avant que le jeu ne commence à « buffer » l'action, il ne prendra pas en compte ton appui. Si tu cliques trop tôt, tu rates la technique, ce qui ajoute une certaine difficulté au jeu et demande plus de précision.",
       difficulty: 2,
       utility: 3,
     },
@@ -38,11 +38,12 @@ export default function StrategiePage() {
       title: "Formation en pyramide",
       description: "Formation offensive pour créer des occasions",
       videoUrl: "https://www.youtube.com/watch?v=cZAg62oHcpY",
-      videoType:"youtube",
+      videoType: "youtube",
       fullDescription:
         "La formation en pyramide est une stratégie offensive qui permet de créer des occasions de but en exploitant les espaces laissés par la défense adverse. En plaçant vos joueurs en forme de pyramide, vous pouvez maximiser les options de passe et de tir. Cette formation est particulièrement efficace pour déstabiliser les défenses compactes et créer des ouvertures.",
       difficulty: 5,
-      utility: 3,},
+      utility: 3,
+    },
   ]
 
   return (
@@ -57,15 +58,15 @@ export default function StrategiePage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {techniques.map((technique) => (
           <TechniqueCard
-          key={technique.id}
-          title={technique.title}
-          description={technique.description}
-          videoUrl={technique.videoUrl}
-          fullDescription={technique.fullDescription}
-          difficulty={technique.difficulty}
-          utility={technique.utility}
-          videoType={technique.videoType} 
-        />
+            key={technique.id}
+            title={technique.title}
+            description={technique.description}
+            videoUrl={technique.videoUrl}
+            fullDescription={technique.fullDescription}
+            difficulty={technique.difficulty}
+            utility={technique.utility}
+            videoType={technique.videoType}
+          />
         ))}
       </div>
     </div>
