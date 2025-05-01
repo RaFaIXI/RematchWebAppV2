@@ -1,16 +1,21 @@
 "use client"
 
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false)
   const [lang, setLang] = useState("en")
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
+    setMounted(true)
+
     const storedLang = localStorage.getItem("lang")
     if (storedLang) {
       setLang(storedLang)
@@ -22,6 +27,10 @@ export function SiteHeader() {
     setLang(newLang)
     localStorage.setItem("lang", newLang)
     window.location.reload()
+  }
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light")
   }
 
   const routes = [
@@ -36,7 +45,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center space-x-2">
-          <img src="assets/favicon-32x32.png" alt="" />
+          <img src="/assets/favicon-32x32.png" alt="" />
           <span className="font-bold">
             {lang === "fr" ? "Maîtrisez Rematch" : "Master Rematch"}
           </span>
@@ -52,6 +61,12 @@ export function SiteHeader() {
               {route.label}
             </Link>
           ))}
+
+          {mounted && (
+            <Button variant="ghost" onClick={toggleTheme}>
+              {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+            </Button>
+          )}
 
           <Button variant="ghost" onClick={toggleLang}>
             {lang === "fr" ? "🇬🇧 English" : "🇫🇷 Français"}
@@ -77,6 +92,13 @@ export function SiteHeader() {
                   {route.label}
                 </Link>
               ))}
+
+              {mounted && (
+                <Button variant="ghost" onClick={toggleTheme}>
+                  {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+                </Button>
+              )}
+
               <Button variant="ghost" onClick={toggleLang}>
                 {lang === "fr" ? "🇬🇧 English" : "🇫🇷 Français"}
               </Button>

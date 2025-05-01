@@ -43,6 +43,9 @@ export default function RootLayout({
 
   return (
     <html lang={lang} suppressHydrationWarning>
+    <meta charSet="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
       <head>
         <meta name="description" content={metadata.description} />
         <title>{metadata.title}</title>
