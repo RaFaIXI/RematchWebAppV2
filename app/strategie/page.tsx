@@ -1,4 +1,6 @@
 import { TechniqueCard } from "@/components/technique-card"
+import Footer from "@/components/Footer" 
+
 
 export default function StrategiePage() {
   const techniques: {
@@ -47,28 +49,32 @@ export default function StrategiePage() {
   ]
 
   return (
-    <div className="container py-8">
-      <div className="space-y-4 mb-8">
-        <h1 className="text-3xl font-bold">Stratégies de Jeu</h1>
-        <p className="text-muted-foreground">
-          Découvrez différentes stratégies et tactiques pour améliorer le jeu collectif de votre équipe.
-        </p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow container py-8">
+        <div className="space-y-4 mb-8">
+          <h1 className="text-3xl font-bold">Stratégies de Jeu</h1>
+          <p className="text-muted-foreground">
+            Découvrez différentes stratégies et tactiques pour améliorer le jeu collectif de votre équipe.
+          </p>
+        </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {techniques.map((technique) => (
-          <TechniqueCard
-            key={technique.id}
-            title={technique.title}
-            description={technique.description}
-            videoUrl={technique.videoUrl}
-            fullDescription={technique.fullDescription}
-            difficulty={technique.difficulty}
-            utility={technique.utility}
-            videoType={technique.videoType}
-          />
-        ))}
-      </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {techniques.map((technique) => (
+            <TechniqueCard
+              key={technique.id}
+              title={technique.title}
+              description={technique.description}
+              videoUrl={technique.videoUrl}
+              fullDescription={technique.fullDescription}
+              difficulty={technique.difficulty}
+              utility={technique.utility}
+              videoType={technique.videoType}
+            />
+          ))}
+        </div>
+      </main>
+
+      <Footer />
     </div>
   )
 }
