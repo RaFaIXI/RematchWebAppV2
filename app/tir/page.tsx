@@ -297,7 +297,7 @@ export default function TirPage() {
       },
       {
         id: 10,
-        videoUrl: "/video/tir/SideShot.mp4",
+        videoUrl: "/video/tir/SideWallReboundGoal.mp4",
         videoType: "local",
         difficulty: 4,
         utility: 4,
