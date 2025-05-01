@@ -12,19 +12,19 @@ const translations = {
     techniques: [
       {
         title: "Ball Sound",
-        description: "Learn the sound cues of the ball",
+        description: "Learn to recognize the sound cues of the ball",
         fullDescription:
-          "The ball makes different sounds based on speed/power and spin. Learning to recognize these can help anticipate the ball's behavior. Note: You can’t distinguish between left and right spin by sound.",
+          "The ball makes different sounds depending on its speed, power, and spin. Learning to recognize these can help anticipate its behavior. Note: You can’t distinguish between left and right spin by sound.",
       },
       {
         title: "Wall Pass",
         description: "Bounce the ball off the wall to pass to a wing",
         fullDescription:
-          "Bounce the ball off the wall to make a pass to a wing. Adding spin can change where the ball lands.",
+          "Bounce the ball off the wall to make a pass to a wing. Adding spin can affect where the ball lands.",
       },
       {
         title: "Simply the Best",
-        description: "The GOAT",
+        description: "The GOAT move",
         fullDescription:
           "Turn around and shoot at the crossbar; the ball will bounce back to the center of the field.",
       },
@@ -32,11 +32,11 @@ const translations = {
         title: "Shot Stop",
         description: "Stop a shot by kicking the ball",
         fullDescription:
-          "Stop a shot by kicking the ball, allowing for an immediate pass to a teammate and a counterattack.",
+          "Stop a shot by kicking the ball. This allows for an immediate pass to a teammate and a quick counterattack.",
       },
       {
         title: "Basic Save",
-        description: "Basic save technique",
+        description: "Basic saving technique",
         fullDescription:
           "Note: You can dash before diving to increase speed.",
       },
@@ -49,37 +49,38 @@ const translations = {
     techniques: [
       {
         title: "Son de la balle",
-        description: "Apprends les effets sonores de la balle",
+        description: "Apprends à reconnaître les sons de la balle",
         fullDescription:
-          "La balle fait des sons différents selon la vitesse/puissance et l'effet de la balle. Il faut apprendre à les reconnaître pour savoir l'effet de la balle (on ne peut pas différencier l'effet gauche et droite).",
+          "La balle émet différents sons selon sa vitesse, sa puissance et son effet. Apprendre à les reconnaître permet d’anticiper son comportement. Remarque : on ne peut pas différencier l'effet gauche ou droit uniquement par le son.",
       },
       {
         title: "Relance mur",
-        description: "Fait rebondir la balle sur le mur pour faire une passe sur une aile",
+        description: "Fais rebondir la balle sur le mur pour passer sur une aile",
         fullDescription:
-          "Fait rebondir la balle sur le mur pour faire une passe sur une aile, un effet permet de changer l'endroit ou la balle va atterrir.",
+          "Fais rebondir la balle sur le mur pour effectuer une passe vers une aile. Ajouter de l’effet modifie l’endroit où la balle atterrit.",
       },
       {
         title: "Tout simplement le meilleur",
-        description: "Goatesque",
+        description: "Le geste du GOAT",
         fullDescription:
-          "Retourne toi et tire sur la transverse, la balle va rebondir et aller au centre du terrain",
+          "Retourne-toi et tire sur la barre transversale ; la balle rebondira vers le centre du terrain.",
       },
       {
-        title: "Arret tir",
-        description: "arrete le tir en tirant sur la balle",
+        title: "Arrêt tir",
+        description: "Arrête un tir en frappant la balle",
         fullDescription:
-          "arrete le tir en tirant sur la balle, permet de dirrectement faire une passe à un coéquipier et contre attaquer",
+          "Arrête un tir en frappant la balle. Cela permet de faire une passe directe à un coéquipier et de lancer une contre-attaque.",
       },
       {
-        title: "Arret",
-        description: "Arret de base",
+        title: "Arrêt basique",
+        description: "Technique d'arrêt de base",
         fullDescription:
-          "note : tu peut faire un dash avant le plongons pour aller plus vite",
+          "Remarque : tu peux faire un dash avant de plonger pour aller plus vite.",
       },
     ],
   },
 }
+
 
 export default function GardienPage() {
   const [lang, setLang] = useState<"en" | "fr">("en")
@@ -117,7 +118,7 @@ export default function GardienPage() {
       videoType: "local",
       difficulty: 1,
       utility: 2,
-      ...t.techniques[0],
+      ...t.techniques[1],
     },
     {
       id: 3,
@@ -125,14 +126,14 @@ export default function GardienPage() {
       videoType: "local",
       difficulty: 5,
       utility: 1,
-      ...t.techniques[0],
+      ...t.techniques[2],
     },    {
       id: 4,
       videoUrl: "/video/Gardien/arrettir.mp4",
       videoType: "local",
       difficulty:3,
       utility: 4,
-      ...t.techniques[0],
+      ...t.techniques[3],
     },
     {
       id: 5,
@@ -140,7 +141,7 @@ export default function GardienPage() {
       videoType: "local",
       difficulty: 2,
       utility: 5,
-      ...t.techniques[0],
+      ...t.techniques[4],
     },
   ]
 
