@@ -94,6 +94,19 @@ const translations = {
         fullDescription:
           "Pass with medium or low power depending on distance, turn toward the wall, aim top corner and shoot.",
       },
+      {
+        "title": "Small Lob Pass Sprint Shot",
+        "description": "Small Lob Pass - Blue Sprint - Shot",
+        "fullDescription":
+          "Make a small lob pass by pressing the pass button, the modifier, and the push ball button at the same time, then immediately do the blue sprint and shoot as soon as possible. If done correctly, your character will perform an aerial shot."
+      },
+      {
+        "title": "Shot Power",
+        "description": "The Uses of Shot Power",
+        "fullDescription":
+          "If you press the shot button for a shorter time, you’ll make a weaker shot but with more spin, which can confuse the goalkeeper. If you press the shot button longer, you’ll make a more powerful shot but with less spin."
+      },
+      
     ],
   },
   fr: {
@@ -184,6 +197,18 @@ const translations = {
         description: "Retournée seule à l'aveugle",
         fullDescription:
           "Faites une passe de puissance moyenne ou faible sur le mur selon la distance, retournez le personnage vers le mur, visez la lucarne puis tirez.",
+      },
+      {
+        title: "Petite Pass Sprint Tir",
+        description: "Petite Pass Lobée - Sprint Bleu - Tir",
+        fullDescription:
+          "fait une petite passe lobée en appuyant sur le bouton de passe, le modifier et le bouton pousser la balle en même temps puis dirrectement fait le Sprint bleu et tir le plus tot possible si bien réalisé ton personnage va faire un tir en l'air",
+      },
+      {
+        title: "Puissance des tirs",
+        description: "Les utilités des puissances de tir",
+        fullDescription:
+          "si tu appuie moins longtemps sur le bouton de tir, tu vas faire un tir plus faible mais avec un effet plus prononcé. ce qui permet des effets qui embrouille le gardien. si tu appuie plus longtemps sur le bouton de tir, tu vas faire un tir plus puissant mais avec moins d'effet.",
       },
     ],
   },
@@ -305,6 +330,20 @@ export default function TirPage() {
         difficulty: 4,
         utility: 3,
       },
+      {
+        id: 15,
+        videoUrl: "/video/tir/PetitePasseTirSprint.mp4",
+        videoType: "local",
+        difficulty: 3,
+        utility: 4,
+      },
+      {
+        id: 16,
+        videoUrl: "/video/tir/PowerOfShots.mp4",
+        videoType: "local",
+        difficulty: 2,
+        utility: 5,
+      }
     ]
     
     const techniques = t.techniques.map((tech, index) => ({

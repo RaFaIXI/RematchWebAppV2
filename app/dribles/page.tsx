@@ -13,7 +13,7 @@ const translations = {
         title: "Arc-en-ciel",
         description: "Faire un arc-en-ciel pour passer au-dessus de l'adversaire",
         fullDescription:
-          "Fais ta touche pour pousser la balle et appuie sur le bouton modifier pour faire un arc-en-ciel. C’est un dribble puissant qui permet de passer des joueurs qui taclent ou débutants, mais un joueur aguerri saura le contrer avec un contrôle ou un tir.",
+          "Fais ta touche pour pousser la balle et appuie sur le bouton modifier pour faire un arc-en-ciel. C’est un dribble puissant qui permet de passer des joueurs qui taclent ou débutants, mais un joueur aguerri saura le contrer avec un contrôle ou un tir . Tu peux modifier la distance de l’arc-en-ciel, si tu cours il ira plus loin que si tu ne cours pas en le faisant.",
       },
       {
         title: "Contrôle",
@@ -67,7 +67,7 @@ const translations = {
         title: "Pousser la balle",
         description: "Pousser la balle est un outil indispensable",
         fullDescription:
-          "Pousser la balle à l'opposé permet de feinter un adversaire. Aussi, en poussant la balle puis en courant, on va plus vite qu’en l’ayant dans les pieds. Faire le sprint bleu permet d’instantanément pousser la balle.",
+          "Pousser la balle à l'opposé permet de feinter un adversaire. Aussi, en poussant la balle puis en courant, on va plus vite qu’en l’ayant dans les pieds. Faire le sprint bleu permet d’instantanément pousser la balle. tu peux choisir la puissance de la poussée, si tu cours la balle ira plus loin que si tu ne cours pas. Donc pour plus de contrôle, tu devrais pousser la balle sans courir puis courir puis re-pousser la balle sans courir.",
       },
       {
         title: "WallBounce",
@@ -87,6 +87,13 @@ const translations = {
         fullDescription:
           "Cela permet de dasher quand tu reçois la balle pour être directement en mouvement. Le timing est dur à avoir.",
       },
+      {
+        title: "Dribble en chaîne",
+        description: "Dribbles enchaînés pour éviter le délai après 2 dribbles rapides",
+        fullDescription: "Tu dois dribbler puis enchaîner un autre dribble avec le bon timing pour éviter le délai après deux dribbles"
+      },
+      
+      
     ],
   },
   en: {
@@ -95,10 +102,10 @@ const translations = {
       "Master the art of dribbling with these techniques to beat defenders and create chances.",
     techniques: [
       {
-        title: "Rainbow",
-        description: "Do a rainbow to go over a defender",
+        title: "Rainbow Flick",
+        description: "Do a rainbow flick to go over a defender",
         fullDescription:
-          "Tap to push the ball and press the modify button to do a rainbow. It’s a powerful move to beat sliding players or beginners, but advanced players can counter it with a control or a shot.",
+          "Tap to push the ball and press the modify button to do a rainbow flick. It’s a powerful move to beat sliding players or beginners, but advanced players can counter it with a control or a shot. You can modify the distance of the rainbow; if you run it will go further than if you dont run while doing it.",
       },
       {
         title: "Control",
@@ -152,7 +159,7 @@ const translations = {
         title: "Push Ball",
         description: "Push the ball away as a core tool",
         fullDescription:
-          "Pushing the ball can fake defenders and helps you run faster. A blue sprint also pushes the ball instantly.",
+          "Pushing the ball can fake defenders and helps you run faster. A blue sprint also pushes the ball instantly. You can choose the push power; running makes it go further than walking. so for more controle you should push ball without running then run then repush the ball without running",
       },
       {
         title: "WallBounce",
@@ -171,6 +178,12 @@ const translations = {
         description: "Dash at the exact moment you receive the ball",
         fullDescription:
           "Dash right as you receive the ball to instantly gain movement. Timing is tricky.",
+      },
+      {
+        title: "Chain Dribble",
+        description: "Chain dribbles to skip the delay after 2 quick dribbles",
+        fullDescription:
+          "you have to drible then re drible with the right timing to skip the delay after 2 dribbles",
       },
     ],
   },
@@ -205,6 +218,9 @@ export default function DriblesPage() {
     { id: 11, videoUrl: "/video/drible/wallbounce.mp4", videoType: "local", difficulty: 2, utility: 1 },
     { id: 12, videoUrl: "/video/drible/walldrible.mp4", videoType: "local", difficulty: 3, utility: 3 },
     { id: 13, videoUrl: "/video/drible/WALLDASH.mp4", videoType: "local", difficulty: 4, utility: 3 },
+    { id: 14, videoUrl: "/video/drible/Dribbles-Chain.mp4", videoType: "local", difficulty: 4, utility: 3 },
+
+    
   ]
   const t = translations[lang]
 const techniques = t.techniques.map((tech, index) => ({
