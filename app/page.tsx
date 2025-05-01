@@ -7,21 +7,14 @@ import { Spline, Shield, Lightbulb, HandMetal, Footprints } from "lucide-react";
 import Footer from "@/components/Footer"; // Import Footer component
 
 export default function Home() {
-  const [lang, setLang] = useState("fr");
-
+  const [lang, setLang] = useState<"en" | "fr">("en");
   useEffect(() => {
     const storedLang = localStorage.getItem("lang");
     if (storedLang) {
-      setLang(storedLang);
+      setLang(storedLang as "en" | "fr"); // Ensure the value from localStorage is correctly typed    }
     }
   }, []);
 
-  const toggleLang = () => {
-    const newLang = lang === "fr" ? "en" : "fr";
-    setLang(newLang);
-    localStorage.setItem("lang", newLang);
-    window.location.reload();
-  };
 
   // Translations based on the selected language
   const translations = {
