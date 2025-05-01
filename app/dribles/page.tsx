@@ -1,158 +1,225 @@
+"use client"
+
 import { TechniqueCard } from "@/components/technique-card"
 import Footer from "@/components/Footer" 
+import { useEffect, useState } from "react"
+const translations = {
+  fr: {
+    pageTitle: "Techniques de Dribble",
+    pageDescription:
+      "Maîtrisez l'art du dribble avec ces techniques pour éliminer vos adversaires et créer des occasions.",
+    techniques: [
+      {
+        title: "Arc-en-ciel",
+        description: "Faire un arc-en-ciel pour passer au-dessus de l'adversaire",
+        fullDescription:
+          "Fais ta touche pour pousser la balle et appuie sur le bouton modifier pour faire un arc-en-ciel. C’est un dribble puissant qui permet de passer des joueurs qui taclent ou débutants, mais un joueur aguerri saura le contrer avec un contrôle ou un tir.",
+      },
+      {
+        title: "Contrôle",
+        description: "Contrôle qui pousse la balle",
+        fullDescription:
+          "Fais ta touche pour pousser la balle et appuie sur le bouton pousser la balle quand elle atterrit proche de toi pour faire un contrôle.",
+      },
+      {
+        title: "Contrôle parfait",
+        description: "Contrôle qui pousse la balle",
+        fullDescription:
+          "Mets-toi exactement sur le point d'atterrissage de la balle pour faire un contrôle qui ne nécessite pas de pousser la balle. Tu peux directement bouger avec.",
+      },
+      {
+        title: "Contrôle tête",
+        description: "Contrôle qui pousse la balle en hauteur pour éviter l'adversaire",
+        fullDescription:
+          "Contrôle qui pousse la balle en hauteur pour éviter l'adversaire. Pour le faire, il faut faire la même combinaison que l’arc-en-ciel, mais avant de toucher la balle et en étant bien positionné.",
+      },
+      {
+        title: "DashDance",
+        description: "Brouille les sens de l'adversaire",
+        fullDescription:
+          "Appuie sur ta touche du mode dribble et relâche-la plusieurs fois très vite tout en bougeant pour faire ces gestes flous.",
+      },
+      {
+        title: "Dribble Cancel",
+        description: "Annule la latence après un dribble",
+        fullDescription:
+          "Si tu input une action comme pousser la balle, tirer ou passer juste après avoir fait tes deux dribbles, tu peux éviter le lag des dribbles.",
+      },
+      {
+        title: "Dribble",
+        description: "Dribbles basiques",
+        fullDescription:
+          "Avec la touche pousser la balle en mode dribble, tu peux faire un dribble. Tu peux enchaîner un deuxième dribble directement sans latence, mais ensuite tu auras du lag. (Sur clavier-souris, si tu dribbles en diagonale, tu iras à l'opposé à cause d'un bug.)",
+      },
+      {
+        title: "Dribble de mouvement",
+        description: "Dribble uniquement par tes mouvements",
+        fullDescription:
+          "Si tu bouges assez bien, tu peux dribbler et passer un adversaire sans utiliser le \"dribble\".",
+      },
+      {
+        title: "Dribble tête",
+        description: "Mets la balle sur ta tête et parcours le terrain",
+        fullDescription:
+          "Tu peux parcourir tout le terrain en jonglant avec ta tête si tu fais le contrôle tête en boucle tout en bougeant.",
+      },
+      {
+        title: "Pousser la balle",
+        description: "Pousser la balle est un outil indispensable",
+        fullDescription:
+          "Pousser la balle à l'opposé permet de feinter un adversaire. Aussi, en poussant la balle puis en courant, on va plus vite qu’en l’ayant dans les pieds. Faire le sprint bleu permet d’instantanément pousser la balle.",
+      },
+      {
+        title: "WallBounce",
+        description: "Fais rebondir ton personnage au mur avec la balle",
+        fullDescription:
+          "Pousse la balle vers le mur en avançant vers lui pour rebondir directement avec la balle.",
+      },
+      {
+        title: "Wall Dribble",
+        description: "Fais rebondir la balle sur le mur pour passer un adversaire",
+        fullDescription:
+          "Fais une passe de puissance moyenne ou faible selon ta distance avec le mur, puis cours pour rattraper la balle à l’atterrissage.",
+      },
+      {
+        title: "Contrôle Dash",
+        description: "Fais un dash pile quand tu contrôles la balle",
+        fullDescription:
+          "Cela permet de dasher quand tu reçois la balle pour être directement en mouvement. Le timing est dur à avoir.",
+      },
+    ],
+  },
+  en: {
+    pageTitle: "Dribble Techniques",
+    pageDescription:
+      "Master the art of dribbling with these techniques to beat defenders and create chances.",
+    techniques: [
+      {
+        title: "Rainbow",
+        description: "Do a rainbow to go over a defender",
+        fullDescription:
+          "Tap to push the ball and press the modify button to do a rainbow. It’s a powerful move to beat sliding players or beginners, but advanced players can counter it with a control or a shot.",
+      },
+      {
+        title: "Control",
+        description: "Control that pushes the ball",
+        fullDescription:
+          "Tap to push the ball and press the push ball button as it lands near you to control it.",
+      },
+      {
+        title: "Perfect Control",
+        description: "Control that doesn’t push the ball",
+        fullDescription:
+          "Stand exactly where the ball lands to control it perfectly without pushing. You can move immediately after.",
+      },
+      {
+        title: "Header Control",
+        description: "Control that lifts the ball to avoid a defender",
+        fullDescription:
+          "Same input as the rainbow, but do it before touching the ball and be well-positioned.",
+      },
+      {
+        title: "DashDance",
+        description: "Confuse the opponent with fast movement",
+        fullDescription:
+          "Tap and release the dribble button repeatedly while moving to perform blurry moves.",
+      },
+      {
+        title: "Dribble Cancel",
+        description: "Cancel the delay after a dribble",
+        fullDescription:
+          "If you input shoot, pass, or push right after two dribbles, you can skip the lag.",
+      },
+      {
+        title: "Dribble",
+        description: "Basic dribbles",
+        fullDescription:
+          "Press the dribble button to dribble. You can chain 2 dribbles fast, but after that there’s lag. (On keyboard/mouse, dribbling diagonally may move you backward due to a bug.)",
+      },
+      {
+        title: "Movement Dribble",
+        description: "Dribble using only movement",
+        fullDescription:
+          "With good movement, you can beat defenders without using the dribble button.",
+      },
+      {
+        title: "Header Dribble",
+        description: "Carry the ball on your head across the field",
+        fullDescription:
+          "You can head-dribble across the field by repeating header controls while moving.",
+      },
+      {
+        title: "Push Ball",
+        description: "Push the ball away as a core tool",
+        fullDescription:
+          "Pushing the ball can fake defenders and helps you run faster. A blue sprint also pushes the ball instantly.",
+      },
+      {
+        title: "WallBounce",
+        description: "Bounce yourself off the wall with the ball",
+        fullDescription:
+          "Push the ball toward the wall while running to bounce off together.",
+      },
+      {
+        title: "Wall Dribble",
+        description: "Bounce the ball off the wall to beat a defender",
+        fullDescription:
+          "Make a soft pass to the wall and run to catch the ball when it lands.",
+      },
+      {
+        title: "Dash Control",
+        description: "Dash at the exact moment you receive the ball",
+        fullDescription:
+          "Dash right as you receive the ball to instantly gain movement. Timing is tricky.",
+      },
+    ],
+  },
+}
 
 export default function DriblesPage() {
-  const techniques: {
-    id: number
-    title: string
-    description: string
-    videoUrl: string
-    videoType: "local" | "youtube"
-    fullDescription: string
-    difficulty: number
-    utility: number
-  }[] = [    
-    {
-      id: 1,
-      title: "Arc-en-ciel",
-      description: "Faire un arc-en-ciel pour passer au-dessus de l'adversaire",
-      videoUrl: "/video/drible/arcenciel.mp4",
-      videoType: "local",
-      fullDescription: "Fais ta touche pour pousser la balle et appuie sur le bouton modifier pour faire un arc-en-ciel. C’est un dribble puissant qui permet de passer des joueurs qui taclent ou débutants, mais un joueur aguerri saura le contrer avec un contrôle ou un tir.",
-      difficulty: 1,
-      utility: 4,
-    },
-    {
-      id: 2,
-      title: "Contrôle",
-      description: "Contrôle qui pousse la balle",
-      videoUrl: "/video/drible/controle.mp4",
-      videoType: "local",
-      fullDescription: "Fais ta touche pour pousser la balle et appuie sur le bouton pousser la balle quand elle atterrit proche de toi pour faire un contrôle.",
-      difficulty: 1,
-      utility: 5,
-    },
-    {
-      id: 3,
-      title: "Contrôle parfait",
-      description: "Contrôle qui pousse la balle",
-      videoUrl: "/video/drible/controleparfait.mp4",
-      videoType: "local",
-      fullDescription: "Mets-toi exactement sur le point d'atterrissage de la balle pour faire un contrôle qui ne nécessite pas de pousser la balle. Tu peux directement bouger avec.",
-      difficulty: 2,
-      utility: 5,
-    },
-    {
-      id: 4,
-      title: "Contrôle tête",
-      description: "Contrôle qui pousse la balle en hauteur pour éviter l'adversaire",
-      videoUrl: "/video/drible/controleTete.mp4",
-      videoType: "local",
-      fullDescription: "Contrôle qui pousse la balle en hauteur pour éviter l'adversaire. Pour le faire, il faut faire la même combinaison que l’arc-en-ciel, mais avant de toucher la balle et en étant bien positionné.",
-      difficulty: 3,
-      utility: 3,
-    },
-    {
-      id: 5,
-      title: "DashDance",
-      description: "Brouille les sens de l'adversaire",
-      videoUrl: "/video/drible/dashdance.mp4",
-      videoType: "local",
-      fullDescription: "Appuie sur ta touche du mode dribble et relâche-la plusieurs fois très vite tout en bougeant pour faire ces gestes flous.",
-      difficulty: 2,
-      utility: 1,
-    },
-    {
-      id: 6,
-      title: "Dribble Cancel",
-      description: "Annule la latence après un dribble",
-      videoUrl: "/video/drible/DribleCancel.mp4",
-      videoType: "local",
-      fullDescription: "Si tu input une action comme pousser la balle, tirer ou passer juste après avoir fait tes deux dribbles, tu peux éviter le lag des dribbles.",
-      difficulty: 1,
-      utility: 5,
-    },
-    {
-      id: 7,
-      title: "Dribble",
-      description: "Dribbles basiques",
-      videoUrl: "/video/drible/dribles+specialpc.mp4",
-      videoType: "local",
-      fullDescription: "Avec la touche pousser la balle en mode dribble, tu peux faire un dribble. Tu peux enchaîner un deuxième dribble directement sans latence, mais ensuite tu auras du lag. (Sur clavier-souris, si tu dribbles en diagonale, tu iras à l'opposé à cause d'un bug.)",
-      difficulty: 1,
-      utility: 4,
-    },
-    {
-      id: 8,
-      title: "Dribble de mouvement",
-      description: "Dribble uniquement par tes mouvements",
-      videoUrl: "/video/drible/DriblesMouvementDashDance.mp4",
-      videoType: "local",
-      fullDescription: "Si tu bouges assez bien, tu peux dribbler et passer un adversaire sans utiliser le \"dribble\".",
-      difficulty: 2,
-      utility: 4,
-    },
-    {
-      id: 9,
-      title: "Dribble tête",
-      description: "Mets la balle sur ta tête et parcours le terrain",
-      videoUrl: "/video/drible/HeaderRow.mp4",
-      videoType: "local",
-      fullDescription: "Tu peux parcourir tout le terrain en jonglant avec ta tête si tu fais le contrôle tête en boucle tout en bougeant.",
-      difficulty: 2,
-      utility: 2,
-    },
-    {
-      id: 10,
-      title: "Pousser la balle",
-      description: "Pousser la balle est un outil indispensable",
-      videoUrl: "/video/drible/pushball.mp4",
-      videoType: "local",
-      fullDescription: "Pousser la balle à l'opposé permet de feinter un adversaire. Aussi, en poussant la balle puis en courant, on va plus vite qu’en l’ayant dans les pieds. Faire le sprint bleu permet d’instantanément pousser la balle.",
-      difficulty: 1,
-      utility: 5,
-    },
-    {
-      id: 11,
-      title: "WallBounce",
-      description: "Fais rebondir ton personnage au mur avec la balle",
-      videoUrl: "/video/drible/wallbounce.mp4",
-      videoType: "local",
-      fullDescription: "Pousse la balle vers le mur en avançant vers lui pour rebondir directement avec la balle.",
-      difficulty: 2,
-      utility: 1,
-    },
-    {
-      id: 12,
-      title: "Wall Dribble",
-      description: "Fais rebondir la balle sur le mur pour passer un adversaire",
-      videoUrl: "/video/drible/walldrible.mp4",
-      videoType: "local",
-      fullDescription: "Fais une passe de puissance moyenne ou faible selon ta distance avec le mur, puis cours pour rattraper la balle à l’atterrissage.",
-      difficulty: 3,
-      utility: 3,
-    },
-    {
-      id: 13,
-      title: "Contrôle Dash",
-      description: "Fais un dash pile quand tu contrôles la balle",
-      videoUrl: "/video/drible/WALLDASH.mp4",
-      videoType: "local",
-      fullDescription: "Cela permet de dasher quand tu reçois la balle pour être directement en mouvement. Le timing est dur à avoir.",
-      difficulty: 4,
-      utility: 3,
-    },
+  const [lang, setLang] = useState<"en" | "fr">("en")
+    
+  useEffect(() => {
+    const storedLang = localStorage.getItem("lang")
+    if (storedLang) {
+      setLang(storedLang as "en" | "fr")
+    }
+  }, [])
+    const techniqueMeta: Array<{
+      id: number
+      videoUrl: string
+      videoType: "local" | "youtube"
+      difficulty: number
+      utility: number
+    }> = [
+    { id: 1, videoUrl: "/video/drible/arcenciel.mp4", videoType: "local", difficulty: 1, utility: 4 },
+    { id: 2, videoUrl: "/video/drible/controle.mp4", videoType: "local", difficulty: 1, utility: 5 },
+    { id: 3, videoUrl: "/video/drible/controleparfait.mp4", videoType: "local", difficulty: 2, utility: 5 },
+    { id: 4, videoUrl: "/video/drible/controleTete.mp4", videoType: "local", difficulty: 3, utility: 3 },
+    { id: 5, videoUrl: "/video/drible/dashdance.mp4", videoType: "local", difficulty: 2, utility: 1 },
+    { id: 6, videoUrl: "/video/drible/DribleCancel.mp4", videoType: "local", difficulty: 1, utility: 5 },
+    { id: 7, videoUrl: "/video/drible/dribles+specialpc.mp4", videoType: "local", difficulty: 1, utility: 4 },
+    { id: 8, videoUrl: "/video/drible/DriblesMouvementDashDance.mp4", videoType: "local", difficulty: 2, utility: 4 },
+    { id: 9, videoUrl: "/video/drible/HeaderRow.mp4", videoType: "local", difficulty: 2, utility: 2 },
+    { id: 10, videoUrl: "/video/drible/pushball.mp4", videoType: "local", difficulty: 1, utility: 5 },
+    { id: 11, videoUrl: "/video/drible/wallbounce.mp4", videoType: "local", difficulty: 2, utility: 1 },
+    { id: 12, videoUrl: "/video/drible/walldrible.mp4", videoType: "local", difficulty: 3, utility: 3 },
+    { id: 13, videoUrl: "/video/drible/WALLDASH.mp4", videoType: "local", difficulty: 4, utility: 3 },
   ]
+  const t = translations[lang]
+const techniques = t.techniques.map((tech, index) => ({
+  ...tech,
+  ...techniqueMeta[index],
+}))
 
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow container py-8">
         <div className="space-y-4 mb-8">
-          <h1 className="text-3xl font-bold">Techniques de Dribble</h1>
-          <p className="text-muted-foreground">
-            Maîtrisez l'art du dribble avec ces techniques pour éliminer vos adversaires et créer des occasions.
-          </p>
+          <h1 className="text-3xl font-bold">{t.pageTitle}</h1>
+<p className="text-muted-foreground">{t.pageDescription}</p>
+
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
