@@ -44,6 +44,8 @@ const translations = {
   },
 }
 
+const exeptionTitle = ["Son de la balle","Ball Sound"]
+
 // Star rating component
 const StarRating = ({
   rating,
@@ -88,7 +90,8 @@ export function TechniqueCard({
   const videoRef = useRef<HTMLVideoElement>(null)
   const youtubeId = videoType === "youtube" ? getYouTubeVideoId(videoUrl) : null
 
-  // Load language preference
+  const isException = exeptionTitle.includes(title)
+
   useEffect(() => {
     const storedLang = localStorage.getItem("lang")
     if (storedLang) {
@@ -102,8 +105,10 @@ export function TechniqueCard({
     if (videoType !== "local" || !videoRef.current || !isOpen) return
 
     const video = videoRef.current
-    video.muted = true
-    video.volume = 0
+    if (!isException) {
+      video.muted = true
+      video.volume = 0
+    }
 
     const playVideo = async () => {
       try {
@@ -116,7 +121,7 @@ export function TechniqueCard({
     playVideo()
 
     const enforceMute = () => {
-      if (videoRef.current) {
+      if (videoRef.current && !isException) {
         videoRef.current.muted = true
         videoRef.current.volume = 0
       }
@@ -130,13 +135,13 @@ export function TechniqueCard({
       video.removeEventListener("play", enforceMute)
       video.pause()
     }
-  }, [isOpen, videoType])
+  }, [isOpen, videoType, isException])
 
   const renderVideo = () => {
     if (videoType === "youtube" && youtubeId) {
       return (
         <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&mute=1&loop=1&playlist=${youtubeId}`}
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&mute=${isException ? "0" : "1"}&loop=1&playlist=${youtubeId}&controls=${isException ? "1" : "0"}`}
           title={`YouTube video: ${title}`}
           className="w-full h-full absolute top-0 left-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -147,12 +152,13 @@ export function TechniqueCard({
       return (
         <video
           ref={videoRef}
-          muted
+          muted={!isException}
           autoPlay={isOpen}
           loop
           playsInline
+          controls={isException}
           onVolumeChange={() => {
-            if (videoRef.current) {
+            if (videoRef.current && !isException) {
               videoRef.current.muted = true
               videoRef.current.volume = 0
             }
@@ -195,13 +201,14 @@ export function TechniqueCard({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className="aspect-video w-full bg-muted mb-4 relative">{renderVideo()}</div>
+        <div className="aspect-video w-full bg-muted mb-4 relative">
+          {renderVideo()}
+        </div>
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:gap-6 mb-2">
             <StarRating rating={difficulty} label={t.difficulty} />
             <StarRating rating={utility} label={t.utility} />
           </div>
-
           <h3 className="text-lg font-medium">{t.description}</h3>
           <p className="text-sm text-muted-foreground">{fullDescription}</p>
         </div>

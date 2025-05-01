@@ -39,6 +39,7 @@ export function SiteHeader() {
     { href: "/defense", label: lang === "fr" ? "Défense" : "Defense" },
     { href: "/strategie", label: lang === "fr" ? "Stratégie" : "Strategy" },
     { href: "/dribles", label: lang === "fr" ? "Dribles" : "Dribbles" },
+    { href: "/gardien", label: lang === "fr" ? "Gardien" : "Goalkeeper" },
   ]
 
   return (
