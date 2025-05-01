@@ -1,29 +1,29 @@
-"use client"; // This directive tells Next.js that this is a client component 
+"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Spline, Shield, Lightbulb, HandMetal, Footprints } from "lucide-react";
-import Footer from "@/components/Footer"; // Import Footer component
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "fr">("en");
+
   useEffect(() => {
     const storedLang = localStorage.getItem("lang");
     if (storedLang) {
-      setLang(storedLang as "en" | "fr"); // Ensure the value from localStorage is correctly typed    }
+      setLang(storedLang as "en" | "fr");
     }
   }, []);
 
-
-  // Translations based on the selected language
   const translations = {
     en: {
       heading: "Master Rematch",
       description: "Learn essential techniques to improve your game with our detailed video tutorials.",
       startButton: "Start",
       aboutTitle: "About",
-      aboutDescription: "Our platform is designed to help players of all levels improve their technical skills. Whether you're a beginner or an experienced player, our tutorials will help you refine your game.",
+      aboutDescription:
+        "Our platform is designed to help players of all levels improve their technical skills. Whether you're a beginner or an experienced player, our tutorials will help you refine your game.",
       exploreButton: "Explore Techniques",
       categoriesTitle: "Techniques Categories",
       categoriesDescription: "Explore our different categories of techniques to improve every aspect of your game.",
@@ -32,13 +32,21 @@ export default function Home() {
       strategy: "Strategy",
       goalkeeper: "Goalkeeper",
       dribbling: "Dribbling",
+      shootDesc: "Perfect your shots and goal scoring",
+      defenseDesc: "Learn essential defensive techniques",
+      strategyDesc: "Master game tactics and strategies",
+      goalkeeperDesc: "Specific techniques for goalkeepers",
+      dribblingDesc: "Improve your dribbling and ball control",
+      imageAlt: "Football training",
     },
     fr: {
       heading: "Maîtrisez Rematch",
-      description: "Apprenez les techniques essentielles pour améliorer votre jeu avec nos tutoriels vidéo détaillés.",
+      description:
+        "Apprenez les techniques essentielles pour améliorer votre jeu avec nos tutoriels vidéo détaillés.",
       startButton: "Commencer",
       aboutTitle: "À propos",
-      aboutDescription: "Notre plateforme est conçue pour aider les joueurs de tous niveaux à améliorer leurs compétences techniques. Que vous soyez débutant ou joueur expérimenté, nos tutoriels vous aideront à perfectionner votre jeu.",
+      aboutDescription:
+        "Notre plateforme est conçue pour aider les joueurs de tous niveaux à améliorer leurs compétences techniques. Que vous soyez débutant ou joueur expérimenté, nos tutoriels vous aideront à perfectionner votre jeu.",
       exploreButton: "Explorer les techniques",
       categoriesTitle: "Catégories de Techniques",
       categoriesDescription: "Explorez nos différentes catégories de techniques pour améliorer tous les aspects de votre jeu.",
@@ -46,7 +54,13 @@ export default function Home() {
       defense: "Défense",
       strategy: "Stratégie",
       goalkeeper: "Gardien",
-      dribbling: "Dribles",
+      dribbling: "Dribbles",
+      shootDesc: "Perfectionnez vos tirs et marquage de buts",
+      defenseDesc: "Apprenez les techniques défensives essentielles",
+      strategyDesc: "Maîtrisez les tactiques et stratégies de jeu",
+      goalkeeperDesc: "Techniques spécifiques pour les gardiens de but",
+      dribblingDesc: "Améliorez vos compétences de dribble et contrôle du ballon",
+      imageAlt: "Entraînement de football",
     },
   };
 
@@ -81,7 +95,7 @@ export default function Home() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{t.aboutTitle}</h2>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed dark:text-gray-400">
                     {t.aboutDescription}
                   </p>
                 </div>
@@ -94,7 +108,7 @@ export default function Home() {
               <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last">
                 <img
                   src="/imagen_2024-07-05_181123833.png"
-                  alt="Football training"
+                  alt={t.imageAlt}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -114,72 +128,34 @@ export default function Home() {
                 </p>
               </div>
             </div>
+
             <div className="mx-auto grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-start pt-8">
-              <Link
-                href="/tir"
-                className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
-              >
-                <div className="rounded-full bg-green-100 p-4 dark:bg-green-900">
-                  <Spline className="h-6 w-6 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="text-xl font-bold">{t.shoot}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Perfectionnez vos tirs et marquage de buts
-                </p>
-              </Link>
-              <Link
-                href="/defense"
-                className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
-              >
-                <div className="rounded-full bg-blue-100 p-4 dark:bg-blue-900">
-                  <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="text-xl font-bold">{t.defense}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Apprenez les techniques défensives essentielles
-                </p>
-              </Link>
-              <Link
-                href="/strategie"
-                className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
-              >
-                <div className="rounded-full bg-purple-100 p-4 dark:bg-purple-900">
-                  <Lightbulb className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="text-xl font-bold">{t.strategy}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Maîtrisez les tactiques et stratégies de jeu
-                </p>
-              </Link>
-              <Link
-                href="/gardien"
-                className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
-              >
-                <div className="rounded-full bg-yellow-100 p-4 dark:bg-yellow-900">
-                  <HandMetal className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
-                </div>
-                <h3 className="text-xl font-bold">{t.goalkeeper}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Techniques spécifiques pour les gardiens de but
-                </p>
-              </Link>
-              <Link
-                href="/dribles"
-                className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
-              >
-                <div className="rounded-full bg-red-100 p-4 dark:bg-red-900">
-                  <Footprints className="h-6 w-6 text-red-600 dark:text-red-400" />
-                </div>
-                <h3 className="text-xl font-bold">{t.dribbling}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Améliorez vos compétences de dribble et contrôle du ballon
-                </p>
-              </Link>
+              <CategoryCard href="/tir" icon={<Spline />} title={t.shoot} desc={t.shootDesc} color="green" />
+              <CategoryCard href="/defense" icon={<Shield />} title={t.defense} desc={t.defenseDesc} color="blue" />
+              <CategoryCard href="/strategie" icon={<Lightbulb />} title={t.strategy} desc={t.strategyDesc} color="purple" />
+              <CategoryCard href="/gardien" icon={<HandMetal />} title={t.goalkeeper} desc={t.goalkeeperDesc} color="yellow" />
+              <CategoryCard href="/dribles" icon={<Footprints />} title={t.dribbling} desc={t.dribblingDesc} color="red" />
             </div>
           </div>
         </section>
       </main>
-      <Footer /> {/* Use the Footer component here */}
+      <Footer />
     </div>
+  );
+}
+
+// Reusable CategoryCard component
+function CategoryCard({ href, icon, title, desc, color }: { href: string; icon: React.ReactNode; title: string; desc: string; color: string }) {
+  return (
+    <Link
+      href={href}
+      className="group flex flex-col items-center space-y-2 rounded-lg p-4 transition-all hover:bg-white dark:hover:bg-gray-950"
+    >
+      <div className={`rounded-full bg-${color}-100 p-4 dark:bg-${color}-900`}>
+        {icon}
+      </div>
+      <h3 className="text-xl font-bold">{title}</h3>
+      <p className="text-sm text-gray-500 dark:text-gray-400 text-center">{desc}</p>
+    </Link>
   );
 }
