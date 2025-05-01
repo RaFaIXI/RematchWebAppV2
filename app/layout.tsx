@@ -1,27 +1,53 @@
-import type React from "react"
-import "@/app/globals.css"
-import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
-import { SiteHeader } from "@/components/layout/site-header"
-import { Analytics } from "@vercel/analytics/react"
+"use client"; // Ensures this component runs client-side
 
-const inter = Inter({ subsets: ["latin"] })
+import type React from "react";
+import { useEffect, useState } from "react"; // Add useEffect and useState
+import "@/app/globals.css";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Analytics } from "@vercel/analytics/react";
 
-export const metadata = {
-  title: "Maîtrisez Rematch - Tutoriels des techniques de Rematch",
-  description: "Apprenez les techniques essentielles pour améliorer votre jeu avec nos tutoriels vidéo détaillés.",
-}
+// Set up the Google Font
+const inter = Inter({ subsets: ["latin"] });
+
+// Default metadata
+const defaultMetadata = {
+  title: "Master Rematch - Rematch Techniques Tutorials",
+  description: "Learn the essential techniques to improve your game with our detailed video tutorials.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
+  // Set up state for the language
+  const [lang, setLang] = useState<string>("fr");
+
+  useEffect(() => {
+    const storedLang = localStorage.getItem("lang");
+    if (storedLang) {
+      setLang(storedLang);
+    }
+  }, []);
+
+  // Determine metadata based on the language
+  const metadata =
+    lang === "fr"
+      ? {
+        title: "Maîtrisez Rematch - Tutoriels des techniques de Rematch",
+        description: "Apprenez les techniques essentielles pour améliorer votre jeu avec nos tutoriels vidéo détaillés.",
+      }
+      : defaultMetadata;
+
   return (
-    <html lang="fr" suppressHydrationWarning>
-        <head>
+    <html lang={lang} suppressHydrationWarning>
+      <head>
+        <meta name="description" content={metadata.description} />
+        <title>{metadata.title}</title>
         <link rel="icon" href="/assets/favicon-32x32.png" />
-        </head>
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="relative flex min-h-screen flex-col">
@@ -32,5 +58,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
