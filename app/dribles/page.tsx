@@ -109,7 +109,7 @@ const translations = {
         title: "WaveDash",
         description: "Dash sur la balle en regardant dans une autre dirrection",
         fullDescription:
-          "Dash sur la balle en regardant dans une autre dirrection pour pouvoir bouger plus vite car tu skip l'annimation où le personnage se retourne.",
+          "Dash sur la balle en regardant dans une autre dirrection pour pouvoir bouger plus vite car tu skip l'annimation où le personnage se retourne. avec le dash  si vous regardez par exemple devant vous et que vous dashé sur une balle, votre personnage attrapera la balle et convertira tous vos mouvements dans la direction de la caméra, c'est un peu délicat à faire, mais c'est de loin la meilleure façon de changer de direction avec la balle",
       }
       
       
@@ -220,7 +220,7 @@ const translations = {
         title: "WaveDash",
         description: "Dash on the ball while loooking away",
         fullDescription:
-          "Dash on the ball while loooking away to be able to move faster cause you skip the turn annimation.",
+          "Dash on the ball while loooking away to be able to move faster cause you skip the turn annimation. With the dash, if you looking for example infront of you and dash into a loose ball behind you, your character will snatch the ball and convert all your movement into the direction of the camera it is a bit tricky to do, but it is by far the best way to change direction with the ball",
       }
     ],
   },
