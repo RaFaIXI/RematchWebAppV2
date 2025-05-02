@@ -165,22 +165,22 @@ export default function Routines() {
 
       // Beginner Routines
       beginner1Title: "Basic Ball Control",
-      beginner1Desc: "Master fundamental ball touches and control exercises",
-      beginner1Duration: "15 minutes",
+      beginner1Desc: "Master fundamental of push ball and control exercises",
+      beginner1Duration: "7 minutes",
       beginner1Points: "50 XP",
       
 
       // Intermediate Routines
-      intermediate1Title: "Advanced Dribbling Circuit",
-      intermediate1Desc: "Navigate through cone patterns with speed and control",
-      intermediate1Duration: "30 minutes",
+      intermediate1Title: "Cross and Shoot Circuit",
+      intermediate1Desc: "Train your shooting and crossing skills while and while not moving",
+      intermediate1Duration: "10 minutes",
       intermediate1Points: "150 XP",
       
 
       // Advanced Routines
-      advanced1Title: "High-Intensity Technical Circuit",
-      advanced1Desc: "Combine skills in a challenging high-intensity circuit",
-      advanced1Duration: "45 minutes",
+      advanced1Title: "Advanced Passing Circuit",
+      advanced1Desc: "Combine passing skills and shooting in a high-intensity circuit, your passes will be more precise",
+      advanced1Duration: "10 minutes",
       advanced1Points: "250 XP",
       
     },
@@ -202,26 +202,24 @@ export default function Routines() {
       closeButton: "Fermer",
       watchingRoutine: "Visionnage de la Routine:",
 
-      // Beginner Routines
-      beginner1Title: "Contrôle de Balle Basique",
-      beginner1Desc: "Maîtrisez les touches de balle fondamentales et les exercices de contrôle",
-      beginner1Duration: "15 minutes",
-      beginner1Points: "50 XP",
+    // Routines Débutant
+    beginner1Title: "Contrôle de Balle de Base",
+    beginner1Desc: "Maîtrise les fondamentaux du contrôle de balle et des exercices de poussée",
+    beginner1Duration: "7 minutes",
+    beginner1Points: "50 XP",
 
+    // Routines Intermédiaire
+    intermediate1Title: "Circuit de Centres et Tirs",
+    intermediate1Desc: "Entraîne-toi aux tirs et aux centres en mouvement et à l'arrêt",
+    intermediate1Duration: "10 minutes",
+    intermediate1Points: "150 XP",
 
-      // Intermediate Routines
-      intermediate1Title: "Circuit de Dribble Avancé",
-      intermediate1Desc: "Naviguez à travers des parcours de cônes avec vitesse et contrôle",
-      intermediate1Duration: "30 minutes",
-      intermediate1Points: "150 XP",
-      
+    // Routines Avancé
+    advanced1Title: "Circuit de Passes Avancé",
+    advanced1Desc: "Combine les passes et les tirs dans un circuit à haute intensité, tes passes seront plus précises",
+    advanced1Duration: "10 minutes",
+    advanced1Points: "250 XP",
 
-
-      // Advanced Routines
-      advanced1Title: "Circuit Technique Haute Intensité",
-      advanced1Desc: "Combinez les compétences dans un circuit exigeant à haute intensité",
-      advanced1Duration: "45 minutes",
-      advanced1Points: "250 XP",
 
 
     },
