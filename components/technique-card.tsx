@@ -44,7 +44,6 @@ const translations = {
   },
 }
 
-const exeptionTitle = ["Son de la balle","Ball Sound"]
 
 // Star rating component
 const StarRating = ({
@@ -75,6 +74,7 @@ const getYouTubeVideoId = (url: string): string | null => {
   const match = url.match(regExp)
   return match && match[2].length === 11 ? match[2] : null
 }
+const exeptionTitle = ["Son de la balle","Ball Sound","Mouvements et Tirs","Movements and Shots","Body Block","Sprint"]
 
 export function TechniqueCard({
   title,

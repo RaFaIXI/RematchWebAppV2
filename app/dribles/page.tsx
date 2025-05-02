@@ -90,7 +90,19 @@ const translations = {
       {
         title: "Dribble en chaîne",
         description: "Dribbles enchaînés pour éviter le délai après 2 dribbles rapides",
-        fullDescription: "Tu dois dribbler puis enchaîner un autre dribble avec le bon timing pour éviter le délai après deux dribbles"
+        fullDescription: "Tu dois dribbler puis enchaîner un autre dribble avec le bon timing pour éviter le délai après deux dribbles, combine les dribbles enchaînés avec la poussée de balle pour être un maître des beaux buts.",
+      },
+      {
+        title: "Dash Push",
+        description: "Pousse la balle puis fais un dash défensif vers la balle",
+        fullDescription:
+          "Pousse la balle puis fais un dash défensif vers la balle.",
+      },
+      {
+        title: "Sprint",
+        description: "Sprint pour aller plus vite, le sprint change le contrôle de la balle",
+        fullDescription:
+          "Appuie sur la touche de sprint pour courir plus vite. Le sprint change tout, il modifie la distance de poussée de la balle, la distance de l'arc-en-ciel et même la distance de contrôle de la balle. Le sprint consomme de l'endurance. Le sprint est essentiel pour un gameplay rapide.",
       },
       
       
@@ -183,8 +195,20 @@ const translations = {
         title: "Chain Dribble",
         description: "Chain dribbles to skip the delay after 2 quick dribbles",
         fullDescription:
-          "you have to drible then re drible with the right timing to skip the delay after 2 dribbles",
+          "you have to drible then re drible with the right timing to skip the delay after 2 dribbles, Combine chain dribles with push ball to be a master of beautiful goals",
       },
+      {
+        title: "Dash Push",
+        description: "Push the ball then do the defensive dash toward the ball",
+        fullDescription:
+          "Push the ball then do the defensive dash toward the ball.",
+      },
+      {
+        title: "Sprint",
+        description: "Sprint to move faster, Sprint alter everything",
+        fullDescription:
+          "Hold the sprint button to run faster. Sprint alter everything, it alter ball push distance, rainbow flick distance, and even the ball control distance. Sprinting use stamina. Sprinting is essential for fast-paced gameplay.",
+      }
     ],
   },
 }
@@ -219,6 +243,10 @@ export default function DriblesPage() {
     { id: 12, videoUrl: "/video/drible/walldrible.mp4", videoType: "local", difficulty: 3, utility: 3 },
     { id: 13, videoUrl: "/video/drible/WALLDASH.mp4", videoType: "local", difficulty: 4, utility: 3 },
     { id: 14, videoUrl: "/video/drible/Dribbles-Chain.mp4", videoType: "local", difficulty: 4, utility: 3 },
+    { id: 15, videoUrl: "/video/drible/dashpush.mp4", videoType: "local", difficulty: 2, utility: 2 },
+    { id: 16, videoUrl: "/video/drible/sprint.mp4", videoType: "local", difficulty: 1, utility: 5 },
+
+
 
     
   ]
