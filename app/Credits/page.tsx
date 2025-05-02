@@ -51,7 +51,9 @@ export default function CreditsPage() {
   
   const contributors = [
     { name: "@askii_78", role: lang === "en" ? "Clip Provider" : "Clippeur"},
-    { name: "@exzya", role: lang === "en" ? "Clip Provider" : "Clippeur"}
+    { name: "@exzya", role: lang === "en" ? "Clip Provider" : "Clippeur"},
+    { name: "@rurer", role: lang === "en" ? "Labber" : "Labbeur"}
+
   ];
 
   return (
