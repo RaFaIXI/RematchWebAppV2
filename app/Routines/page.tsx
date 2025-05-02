@@ -7,7 +7,8 @@ import {
   Calendar, 
   CheckCircle, 
   Zap,
-  X
+  X,
+  Trophy
 } from "lucide-react";
 import Footer from "@/components/Footer";
 
@@ -162,6 +163,9 @@ export default function Routines() {
       points: "XP Points",
       closeButton: "Close",
       watchingRoutine: "Watching Routine:",
+      playerRank: "Player Rank",
+      nextRank: "Next Rank",
+      xpToNext: "XP to Next Rank",
 
       // Beginner Routines
       beginner1Title: "Basic Ball Control",
@@ -201,28 +205,35 @@ export default function Routines() {
       points: "Points XP",
       closeButton: "Fermer",
       watchingRoutine: "Visionnage de la Routine:",
+      playerRank: "Grade du Joueur",
+      nextRank: "Prochain Grade",
+      xpToNext: "XP pour Prochain Grade",
 
-    // Routines Débutant
-    beginner1Title: "Contrôle de Balle de Base",
-    beginner1Desc: "Maîtrise les fondamentaux du contrôle de balle et des exercices de poussée",
-    beginner1Duration: "7 minutes",
-    beginner1Points: "50 XP",
+      // Routines Débutant
+      beginner1Title: "Contrôle de Balle de Base",
+      beginner1Desc: "Maîtrise les fondamentaux du contrôle de balle et des exercices de poussée",
+      beginner1Duration: "7 minutes",
+      beginner1Points: "50 XP",
 
-    // Routines Intermédiaire
-    intermediate1Title: "Circuit de Centres et Tirs",
-    intermediate1Desc: "Entraîne-toi aux tirs et aux centres en mouvement et à l'arrêt",
-    intermediate1Duration: "10 minutes",
-    intermediate1Points: "150 XP",
+      // Routines Intermédiaire
+      intermediate1Title: "Circuit de Centres et Tirs",
+      intermediate1Desc: "Entraîne-toi aux tirs et aux centres en mouvement et à l'arrêt",
+      intermediate1Duration: "10 minutes",
+      intermediate1Points: "150 XP",
 
-    // Routines Avancé
-    advanced1Title: "Circuit de Passes Avancé",
-    advanced1Desc: "Combine les passes et les tirs dans un circuit à haute intensité, tes passes seront plus précises",
-    advanced1Duration: "10 minutes",
-    advanced1Points: "250 XP",
-
-
-
+      // Routines Avancé
+      advanced1Title: "Circuit de Passes Avancé",
+      advanced1Desc: "Combine les passes et les tirs dans un circuit à haute intensité, tes passes seront plus précises",
+      advanced1Duration: "10 minutes",
+      advanced1Points: "250 XP",
     },
+  };
+
+  // Define XP points for each routine
+  const routineXP = {
+    "beginner-1": 50,
+    "intermediate-1": 150,
+    "advanced-1": 250
   };
 
   // Define routines data structure
@@ -235,6 +246,7 @@ export default function Routines() {
         durationKey: "beginner1Duration",
         pointsKey: "beginner1Points"
       },
+      
     ],
     intermediate: [
       {
@@ -260,14 +272,43 @@ export default function Routines() {
 
   // Calculate stats
   const totalCompleted = completedRoutines.length;
+  
+  // Fixed XP calculation
   const totalXP = completedRoutines.reduce((acc, routineId) => {
-    // Extract XP from routine based on ID
-    const routineLevel = routineId.split('-')[0];
-    const routineNumber = routineId.split('-')[1];
-    const key = `${routineLevel}${routineNumber}Points` as keyof typeof translations.en;
-    const points = translations.en[key].split(' ')[0];
-    return acc + parseInt(points);
+    // Use the routineXP lookup object instead of trying to parse from translations
+    return acc + (routineXP[routineId] || 0);
   }, 0);
+
+  // Define player ranks and XP thresholds
+  const playerRanks = [
+    { title: "Rookie", threshold: 10 },
+    { title: "Trainee", threshold: 2000 },
+    { title: "Local Hero", threshold: 5000 },
+    { title: "Academy Pro", threshold: 10000 },
+    { title: "Street Legend", threshold: 20000 }
+  ];
+
+  // Determine current rank
+  const currentRankIndex = playerRanks.reduce((highest, rank, index) => {
+    if (totalXP >= rank.threshold && index > highest) {
+      return index;
+    }
+    return highest;
+  }, 0);
+  
+  const currentRank = playerRanks[currentRankIndex];
+  const nextRank = playerRanks[currentRankIndex + 1];
+  
+  // Calculate progress to next rank
+  let progressPercent = 100;
+  let xpToNext = 0;
+  
+  if (nextRank) {
+    const rangeSize = nextRank.threshold - currentRank.threshold;
+    const progress = totalXP - currentRank.threshold;
+    progressPercent = Math.min(Math.floor((progress / rangeSize) * 100), 100);
+    xpToNext = nextRank.threshold - totalXP;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -298,7 +339,7 @@ export default function Routines() {
                 <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm">
                   <h3 className="text-xl font-bold mb-4">{t.statsTitle}</h3>
                   
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-4 mb-6">
                     <div className="bg-white dark:bg-gray-700 p-4 rounded-md">
                       <div className="flex items-center space-x-2">
                         <CheckCircle className="h-5 w-5 text-green-500" />
@@ -321,6 +362,61 @@ export default function Routines() {
                         <span className="text-sm text-gray-500 dark:text-gray-400">{t.points}</span>
                       </div>
                       <p className="text-2xl font-bold mt-1">{totalXP}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Player Rank Section */}
+                  <div className="bg-white dark:bg-gray-700 p-4 rounded-md mb-6">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Trophy className="h-5 w-5 text-yellow-500" />
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{t.playerRank}</span>
+                    </div>
+                    <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mb-2">{currentRank.title}</p>
+                    
+                    {nextRank && (
+                      <>
+                        <div className="flex justify-between items-center text-sm mb-1">
+                          <span>{t.nextRank}: {nextRank.title}</span>
+                          <span>{xpToNext} {t.xpToNext}</span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
+                          <div 
+                            className="bg-yellow-500 h-2.5 rounded-full" 
+                            style={{ width: `${progressPercent}%` }}
+                          ></div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Full Player Rank Progression */}
+                  <div className="bg-white dark:bg-gray-700 p-4 rounded-md">
+                    <h4 className="font-medium mb-3">Rank Progression</h4>
+                    <div className="space-y-3">
+                      {playerRanks.map((rank, index) => (
+                        <div key={rank.title} className="flex items-center">
+                          <div 
+                            className={`w-4 h-4 rounded-full mr-3 ${
+                              currentRankIndex >= index ? 'bg-yellow-500' : 'bg-gray-300 dark:bg-gray-600'
+                            }`}
+                          ></div>
+                          <div className="flex-1">
+                            <div className="flex justify-between">
+                              <span 
+                                className={`font-medium ${
+                                  currentRankIndex === index ? 'text-yellow-600 dark:text-yellow-400' : ''
+                                }`}
+                              >
+                                {rank.title}
+                              </span>
+                              <span className="text-sm text-gray-500">{rank.threshold} XP</span>
+                            </div>
+                            {index < playerRanks.length - 1 && (
+                              <div className="w-0.5 h-4 bg-gray-300 dark:bg-gray-600 ml-2"></div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -374,8 +470,16 @@ export default function Routines() {
                       />
                     ))}
                   </div>
+                  
                 </div>
+                  {/* Ronaldo Quote */}
+                  <br />
+  <p className="text-center italic text-gray-500 dark:text-gray-400 mb-6">
+    "Training makes Perfect" - Cristiano Ronaldo
+  </p>
               </div>
+              
+              
             </div>
           </div>
         </section>
