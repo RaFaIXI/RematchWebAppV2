@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Master Rematch - Rematch Techniques Tutorials",
   description: "Learn the essential techniques to improve your game with our detailed video tutorials.",
+  other: {
+    "google-site-verification": "WMwlYdrRXd3vYBa2i5cgQENMA5FPl6Xs_d2osN49Llc",
+  },
 };
 
 export default function RootLayout({
