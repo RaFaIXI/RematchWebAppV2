@@ -92,7 +92,7 @@ export default function Home() {
               </div>
               <div className="space-x-4">
                 <Link href="/tir">
-                  <Button className="bg-green-600 hover:bg-green-700">{t.startButton}</Button>
+                  <Button className="bg-green-600 hover:bg-green-700" aria-label="Start learning football shooting">{t.startButton}</Button>
                 </Link>
               </div>
             </div>

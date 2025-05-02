@@ -12,11 +12,16 @@ const inter = Inter({ subsets: ["latin"] });
 
 // Define metadata for the page (this is the Next.js way)
 export const metadata = {
-  title: "Master Rematch - Rematch Techniques Tutorials",
+  title: "Rematch CookBook - Rematch Techniques Tutorials",
   description: "Learn the essential techniques to improve your game with our detailed video tutorials.",
+  keywords: ["Rematch","Rematch Guide","Guide", "soccer", "tutorials", "training", "techniques", "goalkeeper", "shooting", "dribbling"],
+  authors: [{ name: "RaFA", url: "https://discord.com/invite/ua8D567NAp" }],
+  creator: "RaFa",
+  siteName: "Rematch CookBook",
   other: {
     "google-site-verification": "WMwlYdrRXd3vYBa2i5cgQENMA5FPl6Xs_d2osN49Llc",
   },
+  type: "website",
 };
 
 export default function RootLayout({
@@ -28,6 +33,35 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/assets/favicon-32x32.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Rematch CookBook",
+            "url": "https://rematch-cookbook.vercel.app",
+            "description": "Learn the essential techniques to improve your game with our detailed video tutorials.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://rematch-cookbook.vercel.app/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Master Rematch",
+            "url": "https://rematch-cookbook.vercel.app",
+            "description": "Learn the essential techniques to improve your game with our detailed video tutorials.",
+            "logo": "https://rematch-cookbook.vercel.app/assets/favicon-32x32.png", 
+            "sameAs": [
+              "https://www.youtube.com/@rafassbm",
+              "https://discord.com/invite/ua8D567NAp"
+            ]
+          })
+        }} />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
