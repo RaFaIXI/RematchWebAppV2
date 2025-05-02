@@ -3,6 +3,7 @@
 // components/Footer.tsx
 import { FaDiscord } from 'react-icons/fa'
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Footer() {
   const [lang, setLang] = useState<"en" | "fr">("en");
@@ -19,10 +20,12 @@ export default function Footer() {
     en: {
       copyrightText: `© ${new Date().getFullYear()} Master Rematch. All rights reserved.`,
       discordAriaLabel: "Join us on Discord",
+      credits: "Credits",
     },
     fr: {
       copyrightText: `© ${new Date().getFullYear()} Maîtrisez Rematch. Tous droits réservés.`,
       discordAriaLabel: "Rejoignez-nous sur Discord",
+      credits: "Crédits",
     },
   };
 
@@ -34,15 +37,23 @@ export default function Footer() {
         <p className="text-center text-sm leading-loose text-gray-500 md:text-left">
           {t.copyrightText}
         </p>
-        <a
-          href="https://discord.gg/ua8D567NAp"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-gray-700 transition-colors"
-          aria-label={t.discordAriaLabel}
-        >
-          <FaDiscord className="w-6 h-6" />
-        </a>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/Credits"
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            {t.credits}
+          </Link>
+          <a
+            href="https://discord.gg/ua8D567NAp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label={t.discordAriaLabel}
+          >
+            <FaDiscord className="w-6 h-6" />
+          </a>
+        </div>
       </div>
     </footer>
   );
