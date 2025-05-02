@@ -3,6 +3,7 @@
 import { TechniqueCard } from "@/components/technique-card"
 import Footer from "@/components/Footer" 
 import { useEffect, useState } from "react"
+import { title } from "process"
 const translations = {
   fr: {
     pageTitle: "Techniques de Dribble",
@@ -104,6 +105,12 @@ const translations = {
         fullDescription:
           "Appuie sur la touche de sprint pour courir plus vite. Le sprint change tout, il modifie la distance de poussée de la balle, la distance de l'arc-en-ciel et même la distance de contrôle de la balle. Le sprint consomme de l'endurance. Le sprint est essentiel pour un gameplay rapide.",
       },
+      {
+        title: "WaveDash",
+        description: "Dash sur la balle en regardant dans une autre dirrection",
+        fullDescription:
+          "Dash sur la balle en regardant dans une autre dirrection pour pouvoir bouger plus vite car tu skip l'annimation où le personnage se retourne.",
+      }
       
       
     ],
@@ -208,6 +215,12 @@ const translations = {
         description: "Sprint to move faster, Sprint alter everything",
         fullDescription:
           "Hold the sprint button to run faster. Sprint alter everything, it alter ball push distance, rainbow flick distance, and even the ball control distance. Sprinting use stamina. Sprinting is essential for fast-paced gameplay.",
+      },
+      {
+        title: "WaveDash",
+        description: "Dash on the ball while loooking away",
+        fullDescription:
+          "Dash on the ball while loooking away to be able to move faster cause you skip the turn annimation.",
       }
     ],
   },
@@ -245,6 +258,7 @@ export default function DriblesPage() {
     { id: 14, videoUrl: "/video/drible/Dribbles-Chain.mp4", videoType: "local", difficulty: 4, utility: 3 },
     { id: 15, videoUrl: "/video/drible/dashpush.mp4", videoType: "local", difficulty: 2, utility: 2 },
     { id: 16, videoUrl: "/video/drible/sprint.mp4", videoType: "local", difficulty: 1, utility: 5 },
+    { id: 17, videoUrl: "/video/drible/WaveDash.mp4", videoType: "local", difficulty: 3, utility: 4 },
 
 
 
