@@ -15,6 +15,17 @@ export default function Home() {
       setLang(storedLang as "en" | "fr");
     }
   }, []);
+  useEffect(() => {
+    // JavaScript to check if the page is embedded in an iframe
+    if (window.top !== window.self) {
+      // The page is inside an iframe
+      console.log("This page is embedded in an iframe.");
+      // You can also trigger some action, such as redirecting, alerting, etc.
+    } else {
+      // The page is not inside an iframe
+      console.log("This page is not embedded.");
+    }
+  }, []);
 
   const translations = {
     en: {
