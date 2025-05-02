@@ -10,20 +10,19 @@ export default function Home() {
   const [lang, setLang] = useState<"en" | "fr">("en");
 
   useEffect(() => {
-    const storedLang = localStorage.getItem("lang");
-    if (storedLang) {
-      setLang(storedLang as "en" | "fr");
-    }
-  }, []);
-  useEffect(() => {
-    // JavaScript to check if the page is embedded in an iframe
+    // Check if the page is embedded in an iframe
     if (window.top !== window.self) {
-      // The page is inside an iframe
-      console.log("This page is embedded in an iframe.");
-      // You can also trigger some action, such as redirecting, alerting, etc.
+      // Force French language when embedded in an iframe
+      setLang("fr");
+      localStorage.setItem("lang", "fr");
+      console.log("Page is embedded in an iframe. Forcing French language.");
     } else {
-      // The page is not inside an iframe
-      console.log("This page is not embedded.");
+      // Not in an iframe, use stored language preference if available
+      const storedLang = localStorage.getItem("lang");
+      if (storedLang) {
+        setLang(storedLang as "en" | "fr");
+      }
+      console.log("Page is not embedded.");
     }
   }, []);
 
@@ -123,7 +122,6 @@ export default function Home() {
                   className="w-full h-full object-cover"
                   onClick={() => window.open("https://discord.com/invite/ua8D567NAp", "_blank")}
                   style={{ cursor: "pointer" }}
-
                 />
               </div>
             </div>
