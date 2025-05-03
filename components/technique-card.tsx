@@ -141,7 +141,7 @@ export function TechniqueCard({
     if (videoType === "youtube" && youtubeId) {
       return (
         <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&mute=${isException ? "0" : "1"}&loop=1&playlist=${youtubeId}&controls=${isException ? "1" : "0"}`}
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&loop=1&playlist=${youtubeId}&controls=${isException ? "1" : "0"}`}
           title={`YouTube video: ${title}`}
           className="w-full h-full absolute top-0 left-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
