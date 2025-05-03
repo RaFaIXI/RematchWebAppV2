@@ -24,6 +24,7 @@ export default function Routines() {
     title: ""
   });
   const videoRef = useRef<HTMLVideoElement>(null);
+  const modalContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedLang = localStorage.getItem("lang");
@@ -98,6 +99,29 @@ export default function Routines() {
         });
       }
     }
+  }, [videoModal.isOpen]);
+
+  // Add event listener for handling clicks outside the modal
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        videoModal.isOpen && 
+        modalContentRef.current && 
+        !modalContentRef.current.contains(event.target as Node)
+      ) {
+        closeVideoModal();
+      }
+    }
+
+    // Add the event listener when modal is open
+    if (videoModal.isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Clean up event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [videoModal.isOpen]);
 
   const markAsCompleted = (routineId: string) => {
@@ -488,7 +512,10 @@ export default function Routines() {
       {/* Video Modal */}
       {videoModal.isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-4xl mx-4">
+          <div 
+            ref={modalContentRef}
+            className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-4xl mx-4"
+          >
             <div className="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
               <h3 className="text-xl font-bold">{t.watchingRoutine} {videoModal.title}</h3>
               <Button variant="ghost" size="icon" onClick={closeVideoModal}>
