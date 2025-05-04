@@ -117,7 +117,7 @@ const translations = {
         title: "Header Feint 2",
         description: "Fake with the head and control but dont shoot after",
         fullDescription:
-          "Fake with the head and control but dont shoot after,
+          "Fake with the head and control but dont shoot after",
       },
       
     ],
