@@ -30,6 +30,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+    <url>
+    <loc>https://rematch-cookbook.vercel.app/TacticalBoard</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://rematch-cookbook.vercel.app/strategie</loc>
     <changefreq>weekly</changefreq>
