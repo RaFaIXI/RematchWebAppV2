@@ -119,6 +119,12 @@ const translations = {
         fullDescription:
           "Fake with the head and control but dont shoot after",
       },
+      {
+        title: "RainbowFlick - Pass Lob- Shoot",
+        description: "Quick Side Rainbowflick then do a Small Lob Pass then blue Sprint Shot",
+        fullDescription:
+          "Quick Side Rainbowflick then do a Small Lob Pass then blue Sprint then do an instant Shot",
+      },
       
     ],
   },
@@ -235,6 +241,12 @@ const translations = {
         fullDescription:
           "Feinte de tête avec le contrôle mais ne tir pas après.",
       },
+      {
+        "title": "Arc en ciel - Passe Lobée - Tir",
+        "description": "Arc en ciel latéral rapide puis petite passe lobée suivie d’un tir en sprint bleu",
+        "fullDescription": "Arc en ciel latéral rapide puis petite passe lobée suivie d’un tir en sprint blue"
+      }
+      
       
     ],
   },
@@ -383,6 +395,13 @@ export default function TirPage() {
         videoType: "local",
         difficulty: 1,
         utility: 4,
+      },
+      {
+        id: 19,
+        videoUrl: "/video/tir/RainbowFlick-PassLob-Shoot.mp4",
+        videoType: "local",
+        difficulty: 3,
+        utility: 3,
       }
     ]
     
