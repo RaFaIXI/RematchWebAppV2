@@ -123,7 +123,7 @@ const translations = {
         title: "RainbowFlick - Pass Lob- Shoot",
         description: "Quick Side Rainbowflick then do a Small Lob Pass then blue Sprint Shot",
         fullDescription:
-          "Quick Side Rainbowflick then do a Small Lob Pass then blue Sprint then do an instant Shot",
+          "Quick Side Rainbowflick then do a Small Lob Pass then blue Sprint then do an instant Shot. You can do it but toward other sides",
       },
       
     ],
@@ -244,7 +244,7 @@ const translations = {
       {
         "title": "Arc en ciel - Passe Lobée - Tir",
         "description": "Arc en ciel latéral rapide puis petite passe lobée suivie d’un tir en sprint bleu",
-        "fullDescription": "Arc en ciel latéral rapide puis petite passe lobée suivie d’un tir en sprint blue"
+        "fullDescription": "Arc en ciel latéral rapide puis petite passe lobée suivie d’un tir en sprint blue. Tu peut faire cette technique dans différente dirrections"
       }
       
       
