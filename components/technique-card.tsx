@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
 
 interface TechniqueCardProps {
   title: string
@@ -34,6 +35,7 @@ const translations = {
     seeMore: "See more",
     description: "Description",
     unsupported: "Your browser does not support video playback.",
+    loading: "Loading video..."
   },
   fr: {
     difficulty: "Difficulté",
@@ -41,9 +43,9 @@ const translations = {
     seeMore: "Voir plus",
     description: "Description",
     unsupported: "Votre navigateur ne supporte pas la lecture de vidéos.",
+    loading: "Chargement de la vidéo..."
   },
 }
-
 
 // Star rating component
 const StarRating = ({
@@ -74,7 +76,8 @@ const getYouTubeVideoId = (url: string): string | null => {
   const match = url.match(regExp)
   return match && match[2].length === 11 ? match[2] : null
 }
-const exeptionTitle = ["Son de la balle","Ball Sound","Mouvements et Tirs","Movements and Shots","Body Block","Sprint"]
+
+const exceptionTitle = ["Son de la balle", "Ball Sound", "Mouvements et Tirs", "Movements and Shots", "Body Block", "Sprint"]
 
 export function TechniqueCard({
   title,
@@ -89,8 +92,10 @@ export function TechniqueCard({
   const [lang, setLang] = useState<"en" | "fr">("en")
   const videoRef = useRef<HTMLVideoElement>(null)
   const youtubeId = videoType === "youtube" ? getYouTubeVideoId(videoUrl) : null
+  const [isLoading, setIsLoading] = useState(true)
+  const [videoLoaded, setVideoLoaded] = useState(false)
 
-  const isException = exeptionTitle.includes(title)
+  const isException = exceptionTitle.includes(title)
 
   useEffect(() => {
     const storedLang = localStorage.getItem("lang")
@@ -101,6 +106,15 @@ export function TechniqueCard({
 
   const t = translations[lang]
 
+  // Reset loading state when dialog closes
+  useEffect(() => {
+    if (!isOpen) {
+      setIsLoading(true)
+      setVideoLoaded(false)
+    }
+  }, [isOpen])
+
+  // Handle video loading and playback
   useEffect(() => {
     if (videoType !== "local" || !videoRef.current || !isOpen) return
 
@@ -110,16 +124,31 @@ export function TechniqueCard({
       video.volume = 0
     }
 
-    const playVideo = async () => {
+    // Show loading indicator while video loads
+    setIsLoading(true)
+
+    // Handle video load events
+    const handleCanPlay = () => {
+      setIsLoading(false)
+      setVideoLoaded(true)
+    }
+
+    const handleLoadStart = () => {
+      setIsLoading(true)
+    }
+
+    // Attempt to play video once it can play through
+    const handleCanPlayThrough = async () => {
       try {
         await video.play()
+        setIsLoading(false)
       } catch (error) {
         console.error("Autoplay failed:", error)
+        setIsLoading(false)
       }
     }
 
-    playVideo()
-
+    // Enforce mute for non-exception videos
     const enforceMute = () => {
       if (videoRef.current && !isException) {
         videoRef.current.muted = true
@@ -127,48 +156,90 @@ export function TechniqueCard({
       }
     }
 
+    // Add event listeners
+    video.addEventListener("loadstart", handleLoadStart)
+    video.addEventListener("canplay", handleCanPlay)
+    video.addEventListener("canplaythrough", handleCanPlayThrough)
     video.addEventListener("volumechange", enforceMute)
     video.addEventListener("play", enforceMute)
 
+    // Set video source only when dialog is open to prevent preloading
+    video.src = videoUrl
+    video.load()
+
     return () => {
+      // Clean up event listeners
+      video.removeEventListener("loadstart", handleLoadStart)
+      video.removeEventListener("canplay", handleCanPlay)
+      video.removeEventListener("canplaythrough", handleCanPlayThrough)
       video.removeEventListener("volumechange", enforceMute)
       video.removeEventListener("play", enforceMute)
+      
+      // Pause and reset video
       video.pause()
+      video.removeAttribute('src')
+      video.load()
     }
-  }, [isOpen, videoType, isException])
+  }, [isOpen, videoType, videoUrl, isException])
+
+  // Handle YouTube iframe loading
+  useEffect(() => {
+    if (videoType === "youtube" && isOpen) {
+      // For YouTube videos, set a timeout to hide loader after a reasonable time
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+      }, 1000)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, videoType])
 
   const renderVideo = () => {
     if (videoType === "youtube" && youtubeId) {
       return (
-        <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&loop=1&playlist=${youtubeId}&controls=${isException ? "1" : "0"}`}
-          title={`YouTube video: ${title}`}
-          className="w-full h-full absolute top-0 left-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <>
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+              <div className="flex flex-col items-center gap-2">
+                <Loader2 className="h-8 w-8 animate-spin text-white" />
+                <span className="text-white">{t.loading}</span>
+              </div>
+            </div>
+          )}
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=${isOpen ? "1" : "0"}&loop=1&playlist=${youtubeId}&controls=${isException ? "1" : "0"}`}
+            title={`YouTube video: ${title}`}
+            className="w-full h-full absolute top-0 left-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            onLoad={() => setIsLoading(false)}
+          ></iframe>
+        </>
       )
     } else {
       return (
-        <video
-          ref={videoRef}
-          muted={!isException}
-          autoPlay={isOpen}
-          loop
-          playsInline
-          controls={isException}
-          onVolumeChange={() => {
-            if (videoRef.current && !isException) {
-              videoRef.current.muted = true
-              videoRef.current.volume = 0
-            }
-          }}
-          className="w-full h-full object-cover"
-          poster="/placeholder.svg?height=400&width=800"
-        >
-          <source src={videoUrl} type="video/mp4" />
-          {t.unsupported}
-        </video>
+        <>
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+              <div className="flex flex-col items-center gap-2">
+                <Loader2 className="h-8 w-8 animate-spin text-white" />
+                <span className="text-white">{t.loading}</span>
+              </div>
+            </div>
+          )}
+          <video
+            ref={videoRef}
+            muted={!isException}
+            loop
+            playsInline
+            controls={isException}
+            className="w-full h-full object-cover"
+            poster="/placeholder.svg?height=400&width=800"
+          >
+            <source type="video/mp4" />
+            {t.unsupported}
+          </video>
+        </>
       )
     }
   }
