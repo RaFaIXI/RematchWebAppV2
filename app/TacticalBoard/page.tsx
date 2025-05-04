@@ -3,13 +3,17 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { Clipboard, Save, Undo, Download, ExternalLink, HomeIcon } from "lucide-react";
 import Footer from "@/components/Footer";
+import Image from "next/image";
+
 export default function TacticalBoardPage() {
   const [lang, setLang] = useState("en");
   const [players, setPlayers] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [draggedPlayer, setDraggedPlayer] = useState(null);
   const [history, setHistory] = useState([]);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
   const fieldRef = useRef(null);
+  const easterEggTimerRef = useRef(null);
   
   useEffect(() => {
     const storedLang = localStorage.getItem("lang");
@@ -19,7 +23,18 @@ export default function TacticalBoardPage() {
     
     // Initialize players
     initializePlayers();
+
+    return () => {
+      if (easterEggTimerRef.current) {
+        clearTimeout(easterEggTimerRef.current);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    // Check for easter egg pattern after each move
+    checkForEasterEgg();
+  }, [players]);
 
   const translations = {
     en: {
@@ -30,7 +45,8 @@ export default function TacticalBoardPage() {
       downloadImage: "Download Image",
       backToHome: "Back to Home",
       teamA: "Team A",
-      teamB: "Team B"
+      teamB: "Team B",
+      easterEggMessage: "Cheeky! Keep it classy!"
     },
     fr: {
       title: "Tableau Tactique",
@@ -40,7 +56,8 @@ export default function TacticalBoardPage() {
       downloadImage: "Télécharger",
       backToHome: "Retour à l'Accueil",
       teamA: "Équipe A",
-      teamB: "Équipe B"
+      teamB: "Équipe B",
+      easterEggMessage: "Coquin! Restez classe!"
     }
   };
 
@@ -105,8 +122,99 @@ export default function TacticalBoardPage() {
     setDraggedPlayer(null);
   };
 
+  const checkForEasterEgg = () => {
+    // First find all the available players (excluding the ball)
+    const playersOnly = players.filter(p => p.id !== "ball");
+    
+    // We need to find a pattern where:
+    // 1. Two players are positioned close to each other horizontally (the "balls")
+    // 2. Three players are positioned in a vertical line above them (the "shaft")
+    
+    // Step 1: Find all potential pairs that could be the "balls"
+    const potentialPairs = [];
+    for (let i = 0; i < playersOnly.length; i++) {
+      for (let j = i + 1; j < playersOnly.length; j++) {
+        const p1 = playersOnly[i];
+        const p2 = playersOnly[j];
+        
+        // Check if they're roughly at the same height (y value)
+        if (Math.abs(p1.y - p2.y) < 30) {
+          // Check if they're close horizontally but not too close
+          const xDistance = Math.abs(p1.x - p2.x);
+          if (xDistance > 20 && xDistance < 60) {
+            potentialPairs.push([p1, p2]);
+          }
+        }
+      }
+    }
+    
+    // Step 2: For each potential pair, check if there are 3 players forming a vertical line above
+    for (const pair of potentialPairs) {
+      // Find the center point between the two "balls"
+      const centerX = (pair[0].x + pair[1].x) / 2;
+      const baseY = Math.min(pair[0].y, pair[1].y);
+      
+      // Find players that could form the "shaft"
+      const shaftCandidates = playersOnly.filter(p => 
+        !pair.includes(p) && // Not one of the "balls"
+        Math.abs(p.x - centerX) < 30 && // Roughly aligned with the center of the "balls"
+        p.y < baseY - 20 // Above the "balls"
+      );
+      
+      // If we have at least 3 candidates for the shaft, sort them by Y position
+      if (shaftCandidates.length >= 3) {
+        shaftCandidates.sort((a, b) => b.y - a.y); // Sort by Y position (top to bottom)
+        
+        // Check if the top 3 form a reasonably straight line
+        const shaft = shaftCandidates.slice(0, 3);
+        let isAligned = true;
+        
+        for (let i = 0; i < shaft.length; i++) {
+          if (Math.abs(shaft[i].x - centerX) > 30) {
+            isAligned = false;
+            break;
+          }
+          
+          // If not the first element, check vertical spacing with previous
+          if (i > 0) {
+            const verticalSpacing = shaft[i-1].y - shaft[i].y;
+            if (verticalSpacing < 20 || verticalSpacing > 80) {
+              isAligned = false;
+              break;
+            }
+          }
+        }
+        
+        if (isAligned) {
+          // Pattern detected! Trigger easter egg
+          triggerEasterEgg();
+          return;
+        }
+      }
+    }
+  };
+
+  const triggerEasterEgg = () => {
+    if (showEasterEgg) return; // Already showing
+    
+    setShowEasterEgg(true);
+    
+    // Hide the easter egg after a few seconds
+    if (easterEggTimerRef.current) {
+      clearTimeout(easterEggTimerRef.current);
+    }
+    
+    easterEggTimerRef.current = setTimeout(() => {
+      setShowEasterEgg(false);
+    }, 3000);
+  };
+
   const resetBoard = () => {
     initializePlayers();
+    setShowEasterEgg(false);
+    if (easterEggTimerRef.current) {
+      clearTimeout(easterEggTimerRef.current);
+    }
   };
 
   const undoLastMove = () => {
@@ -307,6 +415,27 @@ export default function TacticalBoardPage() {
                   {player.id !== "ball" && player.id.charAt(1)}
                 </div>
               ))}
+              
+              {/* Easter Egg Animation with Image */}
+              {showEasterEgg && (
+                <div className="absolute inset-0 flex items-center justify-center z-30">
+                  <div className="bg-black bg-opacity-70 p-6 rounded-lg animate-bounce">
+                    <p className="text-2xl text-white font-bold mb-4">{t.easterEggMessage}</p>
+                    <div className="flex justify-center">
+                      {/* Replace the emoji with the actual image */}
+                      <div className="relative w-64 h-64">
+                        <Image 
+                          src="/images.png" 
+                          alt="Easter Egg Image" 
+                          layout="fill"
+                          objectFit="contain"
+                          priority
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
