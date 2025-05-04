@@ -52,7 +52,8 @@ export default function CreditsPage() {
   const contributors = [
     { name: "@askii_78", role: lang === "en" ? "Clip Provider" : "Clippeur"},
     { name: "@exzya", role: lang === "en" ? "Clip Provider" : "Clippeur"},
-    { name: "@rurer", role: lang === "en" ? "Labber" : "Labbeur"}
+    { name: "@rurer", role: lang === "en" ? "Labber" : "Labbeur"},
+
 
   ];
 
@@ -118,6 +119,24 @@ export default function CreditsPage() {
                   className="flex items-center justify-center w-8 h-8 bg-red-100 dark:bg-red-900 rounded-full hover:bg-red-200 dark:hover:bg-red-800 transition-colors"
                 >
                   <ExternalLink size={16} className="text-red-600 dark:text-red-300" />
+                </Link>
+              </div>
+              
+              <div className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <Globe size={24} className="text-blue-600" />
+                <div className="flex-1">
+                  <h3 className="font-medium text-gray-800 dark:text-white">prematch.gg</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {lang === "en" ? "Tactical board idea" : "Idée du tableau tactique"}
+                  </p>
+                </div>
+                <Link 
+                  href="https://prematch.gg" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                >
+                  <ExternalLink size={16} className="text-blue-600 dark:text-blue-300" />
                 </Link>
               </div>
             </div>
