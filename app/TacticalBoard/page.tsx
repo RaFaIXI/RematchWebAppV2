@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { Clipboard, Save, Undo, Download, ExternalLink, HomeIcon } from "lucide-react";
+import { Clipboard, Save, Undo, Download, ExternalLink, HomeIcon, Trash2, Edit3, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 
@@ -12,6 +12,11 @@ export default function TacticalBoardPage() {
   const [draggedPlayer, setDraggedPlayer] = useState(null);
   const [history, setHistory] = useState([]);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [isDrawingMode, setIsDrawingMode] = useState(false);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [lines, setLines] = useState([]);
+  const [currentLine, setCurrentLine] = useState(null);
+  const [selectedLineColor, setSelectedLineColor] = useState("#ffffff");
   const fieldRef = useRef(null);
   const easterEggTimerRef = useRef(null);
   
@@ -46,7 +51,11 @@ export default function TacticalBoardPage() {
       backToHome: "Back to Home",
       teamA: "Team A",
       teamB: "Team B",
-      easterEggMessage: "Cheeky! Keep it classy!"
+      easterEggMessage: "Cheeky! Keep it classy!",
+      drawLines: "Draw Lines",
+      exitDrawMode: "Exit Draw Mode",
+      clearLines: "Clear Lines",
+      lineColor: "Line Color"
     },
     fr: {
       title: "Tableau Tactique",
@@ -57,7 +66,11 @@ export default function TacticalBoardPage() {
       backToHome: "Retour à l'Accueil",
       teamA: "Équipe A",
       teamB: "Équipe B",
-      easterEggMessage: "Coquin! Restez classe!"
+      easterEggMessage: "Coquin! Restez classe!",
+      drawLines: "Tracer des Lignes",
+      exitDrawMode: "Quitter Mode Dessin",
+      clearLines: "Effacer Lignes",
+      lineColor: "Couleur de Ligne"
     }
   };
 
@@ -87,39 +100,123 @@ export default function TacticalBoardPage() {
     
     setPlayers([...teamA, ...teamB, ball]);
     setHistory([[...teamA, ...teamB, ball]]);
+    setLines([]);
   };
 
-  const handleMouseDown = (playerId, e) => {
-    setIsDragging(true);
-    setDraggedPlayer(playerId);
-    e.stopPropagation();
+  // Handle player dragging
+  const handlePlayerPointerDown = (playerId, e) => {
+    if (!isDrawingMode) {
+      e.stopPropagation(); // Prevent field's pointer down
+      setIsDragging(true);
+      setDraggedPlayer(playerId);
+    }
   };
 
-  const handleMouseMove = (e) => {
-    if (!isDragging || !draggedPlayer) return;
-    
-    const fieldRect = fieldRef.current.getBoundingClientRect();
-    const x = e.clientX - fieldRect.left;
-    const y = e.clientY - fieldRect.top;
-    
-    // Don't allow dragging outside the field
-    const playerSize = draggedPlayer === "ball" ? 15 : 25;
-    const boundedX = Math.max(playerSize, Math.min(fieldRect.width - playerSize, x));
-    const boundedY = Math.max(playerSize, Math.min(fieldRect.height - playerSize, y));
-    
-    setPlayers(players.map(player => 
-      player.id === draggedPlayer 
-        ? { ...player, x: boundedX, y: boundedY } 
-        : player
-    ));
+  // Handle field interactions for drawing lines
+  const handleFieldPointerDown = (e) => {
+    if (isDrawingMode) {
+      const fieldRect = fieldRef.current.getBoundingClientRect();
+      let x, y;
+      
+      // Handle both touch and mouse events
+      if (e.touches) {
+        x = e.touches[0].clientX - fieldRect.left;
+        y = e.touches[0].clientY - fieldRect.top;
+      } else {
+        x = e.clientX - fieldRect.left;
+        y = e.clientY - fieldRect.top;
+      }
+      
+      setIsDrawing(true);
+      setCurrentLine({
+        id: `line-${Date.now()}`,
+        points: [{x, y}],
+        color: selectedLineColor,
+        width: 3
+      });
+    }
   };
 
-  const handleMouseUp = () => {
+  const handlePointerMove = (e) => {
+    if (isDragging && draggedPlayer) {
+      // Normal dragging mode
+      const fieldRect = fieldRef.current.getBoundingClientRect();
+      let x, y;
+      
+      // Handle both touch and mouse events
+      if (e.touches) {
+        x = e.touches[0].clientX - fieldRect.left;
+        y = e.touches[0].clientY - fieldRect.top;
+      } else {
+        x = e.clientX - fieldRect.left;
+        y = e.clientY - fieldRect.top;
+      }
+      
+      // Don't allow dragging outside the field
+      const playerSize = draggedPlayer === "ball" ? 15 : 25;
+      const boundedX = Math.max(playerSize, Math.min(fieldRect.width - playerSize, x));
+      const boundedY = Math.max(playerSize, Math.min(fieldRect.height - playerSize, y));
+      
+      setPlayers(players.map(player => 
+        player.id === draggedPlayer 
+          ? { ...player, x: boundedX, y: boundedY } 
+          : player
+      ));
+    } else if (isDrawingMode && isDrawing && currentLine) {
+      // Drawing mode - add new point to current line
+      const fieldRect = fieldRef.current.getBoundingClientRect();
+      let x, y;
+      
+      // Handle both touch and mouse events
+      if (e.touches) {
+        x = e.touches[0].clientX - fieldRect.left;
+        y = e.touches[0].clientY - fieldRect.top;
+      } else {
+        x = e.clientX - fieldRect.left;
+        y = e.clientY - fieldRect.top;
+      }
+      
+      // Add point only if it's sufficiently distant from the last point
+      // This prevents too many points and makes the line smoother
+      const lastPoint = currentLine.points[currentLine.points.length - 1];
+      const dx = x - lastPoint.x;
+      const dy = y - lastPoint.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance > 5) {
+        setCurrentLine({
+          ...currentLine,
+          points: [...currentLine.points, {x, y}]
+        });
+      }
+    }
+  };
+
+  const handlePointerUp = () => {
     if (isDragging) {
       setHistory([...history, [...players]]);
+      setIsDragging(false);
+      setDraggedPlayer(null);
+    } else if (isDrawingMode && isDrawing && currentLine) {
+      // End the current line drawing
+      if (currentLine.points.length > 1) {
+        setLines([...lines, currentLine]);
+      }
+      setCurrentLine(null);
+      setIsDrawing(false);
     }
-    setIsDragging(false);
-    setDraggedPlayer(null);
+  };
+
+  const toggleDrawingMode = () => {
+    setIsDrawingMode(!isDrawingMode);
+    setCurrentLine(null);
+    setIsDrawing(false);
+  };
+
+  const clearAllLines = () => {
+    setLines([]);
+    setCurrentLine(null);
+    setIsDrawing(false);
   };
 
   const checkForEasterEgg = () => {
@@ -226,6 +323,19 @@ export default function TacticalBoardPage() {
     }
   };
 
+  // Convert a line with points to an SVG path string
+  const generateSvgPath = (points) => {
+    if (!points || points.length < 2) return "";
+    
+    let path = `M ${points[0].x} ${points[0].y}`;
+    
+    for (let i = 1; i < points.length; i++) {
+      path += ` L ${points[i].x} ${points[i].y}`;
+    }
+    
+    return path;
+  };
+
   const downloadImage = () => {
     // Create a hidden canvas element
     const canvas = document.createElement('canvas');
@@ -267,6 +377,23 @@ export default function TacticalBoardPage() {
     ctx.strokeRect(0, (canvas.height / 2) - 64, 32, 128);
     ctx.strokeRect(canvas.width - 32, (canvas.height / 2) - 64, 32, 128);
     
+    // Draw lines
+    lines.forEach(line => {
+      if (!line.points || line.points.length < 2) return;
+      
+      ctx.strokeStyle = line.color;
+      ctx.lineWidth = line.width || 3;
+      ctx.beginPath();
+      
+      // Draw the line path
+      ctx.moveTo(line.points[0].x, line.points[0].y);
+      for (let i = 1; i < line.points.length; i++) {
+        ctx.lineTo(line.points[i].x, line.points[i].y);
+      }
+      
+      ctx.stroke();
+    });
+    
     // Draw players and ball
     players.forEach(player => {
       if (player.id === "ball") {
@@ -301,6 +428,18 @@ export default function TacticalBoardPage() {
     link.href = dataUrl;
     link.click();
   };
+
+  // Available line colors
+  const lineColors = [
+    { color: "#ffffff", name: lang === "en" ? "White" : "Blanc" },
+    { color: "#3b82f6", name: lang === "en" ? "Blue" : "Bleu" },
+    { color: "#ef4444", name: lang === "en" ? "Red" : "Rouge" },
+    { color: "#10b981", name: lang === "en" ? "Green" : "Vert" },
+    { color: "#f59e0b", name: lang === "en" ? "Orange" : "Orange" },
+    { color: "#8b5cf6", name: lang === "en" ? "Purple" : "Violet" },
+    { color: "#ec4899", name: lang === "en" ? "Pink" : "Rose" },
+    { color: "#fbbf24", name: lang === "en" ? "Yellow" : "Jaune" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
@@ -350,9 +489,52 @@ export default function TacticalBoardPage() {
                 <Download size={18} />
                 <span>{t.downloadImage}</span>
               </button>
+              
+              <button 
+                onClick={toggleDrawingMode}
+                className={`w-full flex items-center justify-center space-x-2 p-3 ${
+                  isDrawingMode 
+                    ? 'bg-purple-600 text-white' 
+                    : 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200'
+                } rounded-lg hover:bg-purple-500 hover:text-white dark:hover:bg-purple-700 transition-colors`}
+              >
+                {isDrawingMode ? <X size={18} /> : <Edit3 size={18} />}
+                <span>{isDrawingMode ? t.exitDrawMode : t.drawLines}</span>
+              </button>
+              
+              {lines.length > 0 && (
+                <button 
+                  onClick={clearAllLines}
+                  className="w-full flex items-center justify-center space-x-2 p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg hover:bg-red-200 dark:hover:bg-red-800 transition-colors"
+                >
+                  <Trash2 size={18} />
+                  <span>{t.clearLines}</span>
+                </button>
+              )}
             </div>
             
-            <div className="mt-8">
+            {isDrawingMode && (
+              <div className="mt-4">
+                <h3 className="font-bold text-gray-800 dark:text-white mb-2">{t.lineColor}</h3>
+                <div className="grid grid-cols-4 gap-2">
+                  {lineColors.map((colorOption) => (
+                    <div
+                      key={colorOption.color}
+                      className={`h-8 rounded-md cursor-pointer border-2 ${
+                        selectedLineColor === colorOption.color 
+                          ? 'border-yellow-400 dark:border-yellow-500' 
+                          : 'border-transparent'
+                      }`}
+                      style={{ backgroundColor: colorOption.color }}
+                      onClick={() => setSelectedLineColor(colorOption.color)}
+                      title={colorOption.name}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            <div className="mt-6">
               <h3 className="font-bold text-gray-800 dark:text-white mb-2">{lang === "en" ? "Teams" : "Équipes"}</h3>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
@@ -369,16 +551,30 @@ export default function TacticalBoardPage() {
                 </div>
               </div>
             </div>
+            
+            {isDrawingMode && (
+              <div className="mt-4 p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                <p className="text-purple-800 dark:text-purple-200 text-sm">
+                  {lang === "en" 
+                    ? "Click and drag anywhere on the field to draw lines. Select a color above." 
+                    : "Cliquez et faites glisser n'importe où sur le terrain pour dessiner des lignes. Sélectionnez une couleur ci-dessus."}
+                </p>
+              </div>
+            )}
           </div>
           
           {/* Tactical Board */}
           <div className="md:col-span-3">
             <div 
               ref={fieldRef}
-              className="bg-green-700 dark:bg-green-800 w-full h-[500px] rounded-xl shadow-md relative overflow-hidden"
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
+              className={`bg-green-700 dark:bg-green-800 w-full h-[500px] rounded-xl shadow-md relative overflow-hidden ${isDrawingMode ? 'cursor-crosshair' : 'cursor-default'}`}
+              onMouseDown={handleFieldPointerDown}
+              onTouchStart={handleFieldPointerDown}
+              onMouseMove={handlePointerMove}
+              onTouchMove={handlePointerMove}
+              onMouseUp={handlePointerUp}
+              onTouchEnd={handlePointerUp}
+              onMouseLeave={handlePointerUp}
             >
               {/* Field markings */}
               <div className="absolute inset-0">
@@ -398,19 +594,49 @@ export default function TacticalBoardPage() {
                 <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-16 h-32 border-2 border-white opacity-50"></div>
               </div>
               
+              {/* Lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                {lines.map((line) => (
+                  <path
+                    key={line.id}
+                    d={generateSvgPath(line.points)}
+                    stroke={line.color}
+                    strokeWidth={line.width || 3}
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                ))}
+                
+                {/* Current drawing line */}
+                {currentLine && currentLine.points && currentLine.points.length > 1 && (
+                  <path
+                    d={generateSvgPath(currentLine.points)}
+                    stroke={currentLine.color}
+                    strokeWidth={currentLine.width || 3}
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                )}
+              </svg>
+              
               {/* Players and ball */}
               {players.map((player) => (
                 <div
                   key={player.id}
-                  className={`absolute cursor-move ${player.id === "ball" ? "rounded-full border-2 border-gray-400 w-8 h-8 z-20" : "rounded-full w-12 h-12 flex items-center justify-center text-white font-bold z-10"}`}
+                  className={`absolute ${isDrawingMode ? '' : 'cursor-move'} ${player.id === "ball" ? "rounded-full border-2 border-gray-400 w-8 h-8 z-20" : "rounded-full w-12 h-12 flex items-center justify-center text-white font-bold z-10"}`}
                   style={{
                     backgroundColor: player.color,
                     left: player.x - (player.id === "ball" ? 4 : 6), // Center the player
                     top: player.y - (player.id === "ball" ? 4 : 6),
                     boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                    userSelect: 'none' // Prevent text selection
+                    userSelect: 'none', // Prevent text selection
+                    touchAction: 'none', // Prevent browser handling of touch events
+                    pointerEvents: isDrawingMode ? 'none' : 'auto' // Allows drawing through players in drawing mode
                   }}
-                  onMouseDown={(e) => handleMouseDown(player.id, e)}
+                  onMouseDown={(e) => handlePlayerPointerDown(player.id, e)}
+                  onTouchStart={(e) => handlePlayerPointerDown(player.id, e)}
                 >
                   {player.id !== "ball" && player.id.charAt(1)}
                 </div>
@@ -439,7 +665,14 @@ export default function TacticalBoardPage() {
             </div>
             
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-              {lang === "en" ? "Drag players and ball to create your tactical setup" : "Faites glisser les joueurs et le ballon pour créer votre configuration tactique"}
+              {isDrawingMode 
+                ? (lang === "en" 
+                    ? "Click and drag anywhere to draw lines" 
+                    : "Cliquez et faites glisser n'importe où pour dessiner des lignes")
+                : (lang === "en" 
+                    ? "Drag players and ball to create your tactical setup" 
+                    : "Faites glisser les joueurs et le ballon pour créer votre configuration tactique")
+              }
             </div>
           </div>
         </div>
@@ -448,5 +681,4 @@ export default function TacticalBoardPage() {
 
       </div>
     </div>
-  );
-}
+  );}
