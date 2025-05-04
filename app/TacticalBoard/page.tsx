@@ -52,7 +52,7 @@ export default function TacticalBoardPage() {
       teamA: "Team A",
       teamB: "Team B",
       easterEggMessage: "Cheeky! Keep it classy!",
-      drawLines: "Draw Lines",
+      drawLines: "Draw Mode",
       exitDrawMode: "Exit Draw Mode",
       clearLines: "Clear Lines",
       lineColor: "Line Color"
@@ -67,10 +67,10 @@ export default function TacticalBoardPage() {
       teamA: "Équipe A",
       teamB: "Équipe B",
       easterEggMessage: "Coquin! Restez classe!",
-      drawLines: "Tracer des Lignes",
+      drawLines: "Mode Dessin",
       exitDrawMode: "Quitter Mode Dessin",
-      clearLines: "Effacer Lignes",
-      lineColor: "Couleur de Ligne"
+      clearLines: "Effacer",
+      lineColor: "Couleur"
     }
   };
 
