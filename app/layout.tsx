@@ -39,64 +39,63 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-      <link rel="preload" href="/video/Defense/block.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Defense/bodyblock.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Defense/tacle.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Defense/tacleglisse.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/arcenciel.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/controle.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/controleparfait.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/controleTete.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/dashdance.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/dashpush.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/Dribbles-Chain.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/DribleCancel.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/dribles+specialpc.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/DriblesMouvementDashDance.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/HeaderRow.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/pushball.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/sprint.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/wallbounce.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/WALLDASH.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/walldrible.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/drible/WaveDash.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Gardien/Arret+dasharret.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Gardien/arrettir.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Gardien/GoatGK.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Gardien/relancemur.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Gardien/SonDesTirs.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Routines/passroutine.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Routines/pushballandscanroutine.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Routines/shootandcrossroutine.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Strategie/BackBoard.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Strategie/buffergclickmiddleligneblanche.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/Strategie/UnlockUltimatePowerwithPyramidFormationinRematch.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/atetes.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/degreetir.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/deviationShot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/headerfeint2.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/infinitete.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/InstaShoot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/ligneBlanche1BackboardTeteTir.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/LobFeint.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/longerlobgoal.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/medium2lobgoal.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/mediumlobgoal.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/mixuppassecotetir.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/mouvementsAltersShoot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/PetitePasseTirSprint.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/PowerOfShots.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/RainbowFlick-PassLob-Shoot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/retournerDegree3Rapide.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/ShortPassShoot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/SideShot.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/SideWallReboundGoal.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/SideWallReboundGoalOtherSide.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/specialearcencielTeteWallBut.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/talonnade.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/tiranglebas.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-<link rel="preload" href="/video/tir/Wallretourne.mp4" as="fetch" type="video/mp4" crossOrigin="anonymous" />
-
+      <link rel="prefetch" href="/video/Defense/block.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Defense/bodyblock.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Defense/tacle.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Defense/tacleglisse.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/arcenciel.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/controle.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/controleparfait.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/controleTete.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/dashdance.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/dashpush.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/Dribbles-Chain.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/DribleCancel.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/dribles+specialpc.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/DriblesMouvementDashDance.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/HeaderRow.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/pushball.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/sprint.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/wallbounce.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/WALLDASH.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/walldrible.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/drible/WaveDash.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Gardien/Arret+dasharret.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Gardien/arrettir.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Gardien/GoatGK.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Gardien/relancemur.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Gardien/SonDesTirs.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Routines/passroutine.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Routines/pushballandscanroutine.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Routines/shootandcrossroutine.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Strategie/BackBoard.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Strategie/buffergclickmiddleligneblanche.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/Strategie/UnlockUltimatePowerwithPyramidFormationinRematch.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/atetes.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/degreetir.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/deviationShot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/headerfeint2.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/infinitete.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/InstaShoot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/ligneBlanche1BackboardTeteTir.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/LobFeint.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/longerlobgoal.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/medium2lobgoal.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/mediumlobgoal.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/mixuppassecotetir.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/mouvementsAltersShoot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/PetitePasseTirSprint.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/PowerOfShots.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/RainbowFlick-PassLob-Shoot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/retournerDegree3Rapide.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/ShortPassShoot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/SideShot.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/SideWallReboundGoal.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/SideWallReboundGoalOtherSide.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/specialearcencielTeteWallBut.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/talonnade.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/tiranglebas.mp4" as="video" type="video/mp4" />
+<link rel="prefetch" href="/video/tir/Wallretourne.mp4" as="video" type="video/mp4" />
         <link rel="icon" href="/assets/favicon-32x32.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{
