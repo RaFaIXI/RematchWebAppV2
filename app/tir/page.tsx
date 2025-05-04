@@ -113,6 +113,12 @@ const translations = {
         "fullDescription":
           "Every movement changes the shot trajectory. Pay attention to the ball's direction and speed for accurate shots. Also, consider the player's position: in the air or on the ground, it affects the shot trajectory. Practice not only while stationary but also while moving.",
       },
+      {
+        title: "Header Feint 2",
+        description: "Fake with the head and control but dont shoot after",
+        fullDescription:
+          "Fake with the head and control but dont shoot after,
+      },
       
     ],
   },
@@ -223,6 +229,13 @@ const translations = {
         fullDescription:
           "Chaque mouvement change la trajectoire de tirs, il faut bien faire attention à la direction de la balle et de la vitesse de la balle pour bien tirer. Il faut aussi faire attention à la position du joueur, si le joueur est en l'air ou au sol, cela change aussi la trajectoire du tir. et s'entrainer pas uniquement sans bouger mais aussi en bougeant.",
       },
+      {
+        title: "Feinte de tête 2",
+        description: "Feinte de tête avec le contrôle mais ne tir pas après",
+        fullDescription:
+          "Feinte de tête avec le contrôle mais ne tir pas après.",
+      },
+      
     ],
   },
 }
@@ -363,6 +376,13 @@ export default function TirPage() {
         videoType: "local",
         difficulty: 1,
         utility: 5,
+      },
+      {
+        id: 18,
+        videoUrl: "/video/tir/headerfeint2.mp4",
+        videoType: "local",
+        difficulty: 1,
+        utility: 4,
       }
     ]
     
