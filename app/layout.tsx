@@ -12,9 +12,16 @@ const inter = Inter({ subsets: ["latin"] });
 
 // Define metadata for the page (this is the Next.js way)
 export const metadata = {
-  title: "Rematch CookBook - Rematch Techniques Tutorials",
-  description: "Learn the essential techniques to improve your game with our detailed video tutorials.",
-  keywords: ["Rematch","Rematch Guide","Guide", "soccer", "tutorials", "training", "techniques", "goalkeeper", "shooting", "dribbling"],
+  title: "Master Rematch: Guides, Tutorials & Training | Rematch CookBook",
+  description: "Master Rematch with detailed soccer tutorials, training guides, and techniques for dribbling, shooting, and goalkeeping. Your ultimate Rematch guide.",
+  keywords: ["Rematch","Rematch Guide","Guide", "soccer", "tutorials", "training", "techniques", "goalkeeper", "shooting", "dribbling","Rematch",
+    "Rematch Tutorial",
+    "Master Rematch",
+    "soccer guide",
+    "training video",
+    "dribbling tutorial",
+    "goalkeeper techniques"
+  ],
   authors: [{ name: "RaFa", url: "https://discord.com/invite/ua8D567NAp" }],
   creator: "RaFa",
   siteName: "Rematch CookBook",
