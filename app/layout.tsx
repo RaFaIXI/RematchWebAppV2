@@ -15,7 +15,7 @@ export const metadata = {
   title: "Rematch CookBook - Rematch Techniques Tutorials",
   description: "Learn the essential techniques to improve your game with our detailed video tutorials.",
   keywords: ["Rematch","Rematch Guide","Guide", "soccer", "tutorials", "training", "techniques", "goalkeeper", "shooting", "dribbling"],
-  authors: [{ name: "RaFA", url: "https://discord.com/invite/ua8D567NAp" }],
+  authors: [{ name: "RaFa", url: "https://discord.com/invite/ua8D567NAp" }],
   creator: "RaFa",
   siteName: "Rematch CookBook",
   other: {
@@ -55,7 +55,7 @@ export default function RootLayout({
             "name": "Master Rematch",
             "url": "https://rematch-cookbook.vercel.app",
             "description": "Learn the essential techniques to improve your game with our detailed video tutorials.",
-            "logo": "https://rematch-cookbook.vercel.app/assets/favicon-32x32.png", 
+            "logo": "https://rematch-cookbook.vercel.app/favicon-32x32.png", 
             "sameAs": [
               "https://www.youtube.com/@rafassbm",
               "https://discord.com/invite/ua8D567NAp"
