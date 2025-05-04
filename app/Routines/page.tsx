@@ -1,4 +1,5 @@
 "use client";
+import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,10 @@ import {
 import Footer from "@/components/Footer";
 
 export default function Routines() {
+  const [calendarView, setCalendarView] = useState(false);
+const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+const [trainingHistory, setTrainingHistory] = useState({});
   const [lang, setLang] = useState<"en" | "fr">("en");
   const [activeTab, setActiveTab] = useState<"beginner" | "intermediate" | "advanced">("beginner");
   const [completedRoutines, setCompletedRoutines] = useState<string[]>([]);
@@ -83,6 +88,11 @@ export default function Routines() {
     // Update last active date to today
     setLastActiveDate(today);
     localStorage.setItem("lastActiveDate", today);
+
+    const storedHistory = localStorage.getItem("trainingHistory");
+    if (storedHistory) {
+      setTrainingHistory(JSON.parse(storedHistory));
+    }
   }, []);
 
   // Effect to handle autoplay when video modal opens
@@ -126,20 +136,78 @@ export default function Routines() {
 
   const markAsCompleted = (routineId: string) => {
     const newCompletedRoutines = [...completedRoutines];
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    const newTrainingHistory = { ...trainingHistory };
     
     if (completedRoutines.includes(routineId)) {
       // Remove if already completed
       const index = newCompletedRoutines.indexOf(routineId);
       newCompletedRoutines.splice(index, 1);
+      
+      // Remove from history if it exists
+      if (newTrainingHistory[today]) {
+        newTrainingHistory[today] = newTrainingHistory[today].filter(item => item.id !== routineId);
+        if (newTrainingHistory[today].length === 0) {
+          delete newTrainingHistory[today];
+        }
+      }
     } else {
       // Add to completed
       newCompletedRoutines.push(routineId);
+      
+      // Find routine details
+      let routineDetails = null;
+      Object.keys(routinesByLevel).forEach(level => {
+        const found = routinesByLevel[level].find(r => r.id === routineId);
+        if (found) {
+          routineDetails = {
+            id: routineId,
+            title: t[found.titleKey],
+            level,
+            xp: routineXP[routineId]
+          };
+        }
+      });
+      
+      // Add to history
+      if (!newTrainingHistory[today]) {
+        newTrainingHistory[today] = [];
+      }
+      newTrainingHistory[today].push(routineDetails);
     }
     
     setCompletedRoutines(newCompletedRoutines);
+    setTrainingHistory(newTrainingHistory);
     localStorage.setItem("completedRoutines", JSON.stringify(newCompletedRoutines));
+    localStorage.setItem("trainingHistory", JSON.stringify(newTrainingHistory));
   };
 
+// 5. Add these helper functions for the calendar
+const getDaysInMonth = (year, month) => {
+  return new Date(year, month + 1, 0).getDate();
+};
+
+const getFirstDayOfMonth = (year, month) => {
+  return new Date(year, month, 1).getDay();
+};
+
+const getPreviousMonth = () => {
+  if (selectedMonth === 0) {
+    setSelectedMonth(11);
+    setSelectedYear(selectedYear - 1);
+  } else {
+    setSelectedMonth(selectedMonth - 1);
+  }
+};
+
+const getNextMonth = () => {
+  if (selectedMonth === 11) {
+    setSelectedMonth(0);
+    setSelectedYear(selectedYear + 1);
+  } else {
+    setSelectedMonth(selectedMonth + 1);
+  }
+};
   const openVideoModal = (id: string, title: string) => {
     // Map routine ID to a video URL
     // In a real application, these would be actual video URLs
@@ -171,6 +239,16 @@ export default function Routines() {
 
   const translations = {
     en: {
+      pageJournal: "Training Journal",
+      viewCalendar: "View Calendar",
+      viewStats: "View Stats",
+      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      noTraining: "No training recorded",
+      trainingOn: "Training on",
+      routine: "Routine",
+      level: "Level",
+      totalXP: "Total XP",
       pageTitle: "Training Routines",
       pageDescription: "Improve your skills with gamified training routines for all levels",
       routinesDescription: "Track your progress and complete daily exercises to build your training streak",
@@ -213,6 +291,16 @@ export default function Routines() {
       
     },
     fr: {
+      pageJournal: "Journal d'Entraînement",
+      viewCalendar: "Voir le Calendrier",
+      viewStats: "Voir les Statistiques",
+      monthNames: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+      weekDays: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+      noTraining: "Aucun entraînement enregistré",
+      trainingOn: "Entraînement le",
+      routine: "Routine",
+      level: "Niveau",
+      totalXP: "XP Total",
       pageTitle: "Routines d'Entraînement",
       pageDescription: "Améliorez vos compétences avec des routines d'entraînement ludiques pour tous les niveaux",
       routinesDescription: "Suivez vos progrès et complétez des exercices quotidiens pour construire votre série d'entraînement",
@@ -503,7 +591,88 @@ export default function Routines() {
   </p>
               </div>
               
-              
+              <div className="flex justify-center mt-6">
+  <Button
+    onClick={() => setCalendarView(!calendarView)}
+    variant="outline"
+    className="w-full"
+  >
+    <CalendarIcon className="h-4 w-4 mr-2" />
+    {calendarView ? t.viewStats : t.viewCalendar}
+  </Button>
+</div>
+{calendarView && (
+  <div className="bg-white dark:bg-gray-700 p-4 rounded-md mt-6">
+    <div className="flex justify-between items-center mb-4">
+      <Button variant="ghost" size="sm" onClick={getPreviousMonth}>
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
+      <h3 className="font-medium">
+        {t.monthNames[selectedMonth]} {selectedYear}
+      </h3>
+      <Button variant="ghost" size="sm" onClick={getNextMonth}>
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
+    
+    <div className="grid grid-cols-7 gap-1 text-center text-xs mb-1">
+      {t.weekDays.map(day => (
+        <div key={day} className="font-medium text-gray-500">
+          {day}
+        </div>
+      ))}
+    </div>
+    
+    <div className="grid grid-cols-7 gap-1">
+      {Array(getFirstDayOfMonth(selectedYear, selectedMonth))
+        .fill(null)
+        .map((_, i) => (
+          <div key={`empty-${i}`} className="aspect-square p-1"></div>
+        ))}
+      
+      {Array(getDaysInMonth(selectedYear, selectedMonth))
+        .fill(null)
+        .map((_, i) => {
+          const day = i + 1;
+          const dateStr = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          const hasTraining = trainingHistory[dateStr] && trainingHistory[dateStr].length > 0;
+          const isToday = dateStr === new Date().toISOString().split('T')[0];
+          const totalDayXP = hasTraining 
+            ? trainingHistory[dateStr].reduce((sum, item) => sum + item.xp, 0)
+            : 0;
+          
+          return (
+            <div 
+              key={`day-${day}`}
+              className={`aspect-square p-1 text-xs rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 relative ${
+                isToday ? 'ring-2 ring-blue-500' : ''
+              } ${hasTraining ? 'bg-green-100 dark:bg-green-900/30' : ''}`}
+              onClick={() => {
+                if (hasTraining) {
+                  alert(`${t.trainingOn} ${day} ${t.monthNames[selectedMonth]}:\n\n${
+                    trainingHistory[dateStr].map(item => 
+                      `${t.routine}: ${item.title}\n${t.level}: ${item.level}\n${t.totalXP}: ${item.xp}`
+                    ).join('\n\n')
+                  }`);
+                } else {
+                  alert(t.noTraining);
+                }
+              }}
+            >
+              <div className="flex flex-col h-full">
+                <span>{day}</span>
+                {hasTraining && (
+                  <div className="mt-auto text-center font-medium text-purple-600 dark:text-purple-400">
+                    {totalDayXP} XP
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+    </div>
+  </div>
+)}
             </div>
           </div>
         </section>
