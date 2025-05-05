@@ -13,9 +13,9 @@
     "deploy": "gh-pages -d build",
     "generate-sitemap": "next-sitemap",
     "postbuild": "next-sitemap"
-
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.12",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

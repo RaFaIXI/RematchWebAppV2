@@ -1,0 +1,5 @@
+name = "rematch-web-app-v2"
+compatibility_date = "2025-05-05"
+
+[build]
+command = "npm run build"
