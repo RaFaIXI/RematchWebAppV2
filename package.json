@@ -1,6 +1,5 @@
 {
   "homepage": "https://RaFaIXI.github.io/RematchWebAppV2",
-  "packageManager": "npm@9.8.1",
   "type": "module",
   "name": "my-v0-project",
   "version": "0.1.0",
