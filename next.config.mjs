@@ -9,8 +9,18 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Set the entire devIndicators to false to disable all indicators
   devIndicators: false,
-}
 
-export default nextConfig
+  // 🔁 Redirection vers rematch-guide.com
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        destination: "https://rematch-guide.com/:path*",
+        permanent: true, // Utilise true pour une redirection 308 (permanente)
+      },
+    ];
+  },
+};
+
+export default nextConfig;
